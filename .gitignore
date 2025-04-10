@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+.vscode
+package-lock.json
+.env
+_MACOSX
+~$Project_monitoring_sheet.xlsx
+Project_monitoring_sheet.xlsx
