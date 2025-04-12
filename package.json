@@ -8,7 +8,7 @@
     "test": "node test",
     "start": "node app.js"
   },
-  "author": "Emmanuel Okoro",
+  "author": "Group-18",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.9",
