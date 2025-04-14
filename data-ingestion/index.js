@@ -1,0 +1,1 @@
+// Script to run both fetchData and updateDB.
