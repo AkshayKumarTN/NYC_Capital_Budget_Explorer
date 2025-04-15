@@ -21,7 +21,7 @@ export function enrichData(item) {
     borough: boroughCode,
     borough_full: boroughMap[boroughCode] || "Unknown",
     council_district: isNaN(district) ? null : district,
-    borough_full: neighborhoodMap[key] || [],
+    neighborhoods: neighborhoodMap[key] || [],
     sponsor: item.sponsor || null,
     title: item.title || null,
     description: item.description || null,
