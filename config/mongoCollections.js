@@ -15,4 +15,4 @@ const getCollectionFn = (collection) => {
 };
 
 /* Now, you can list your collections here: */
-export const movies = getCollectionFn('projects');
+export const projects = getCollectionFn('projects');
