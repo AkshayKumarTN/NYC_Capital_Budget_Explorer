@@ -1,0 +1,29 @@
+<!-- 
+This handlebar file will be rendered when the following route is hit: GET http://localhost:3000/
+ -->
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYC Council Project Explorer App</title>
+    <link rel="stylesheet" href="/public/css/homePage.css">
+</head>
+
+<body>
+    <main>
+        <div id="login-form-container">
+            <p class="home-page">Sign In to NYC Explorer</p>
+            <form class="form-container" action="/login" method="POST">
+                <input type="text" id="userEmail" name="userEmail" placeholder="E-mail">
+                <input type="password" id="userPassword" name="userPassword" placeholder="Password">
+                <input type="submit" value="Sign In" class="submit-button">
+            </form>
+            <p class="register">Don't have an account? <a href="/register">Register here</a></p>
+        </div>
+        <section class="home-page-background"></section>
+    </main>
+</body>
+
+</html>
