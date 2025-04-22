@@ -3,6 +3,7 @@ import homeRouter from './home.js';
 import projectsRouter  from './projects.js';
 import userAuthenticationRouter from './userAuthentication.js';
 import exportRouter from './export.js';
+import userRegistrationRouter from './userRegistration.js';
 
 
 const constructorMethod = (app) => {
@@ -13,6 +14,7 @@ const constructorMethod = (app) => {
     app.use('/projects', projectsRouter);
     app.use('/export', exportRouter);
     app.use('/public', staticDir('public'));
+    app.use("/signup", userRegistrationRouter);
     
     app.use('*', (req, res) => {
         res.status(404).render('error', { title: 'Error', error: 'Page Not Found' });
