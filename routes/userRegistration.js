@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { badRequest, getValidatedUserInfo } from "../utils/authHelpers.js";
 import { createUser } from "../data/index.js";
+import { initSession } from "../utils/sessionManager.js";
 
 
 const router = Router();
@@ -30,6 +31,10 @@ router.route("/")
     try {
         const userData = await createUser(registrationData);
         console.log("User data: ", userData);
+
+        //Set the session
+        initSession(req, userData);
+        
         return res.render("home", { userData });
     }catch(e) {
         console.log("Error: ", e);

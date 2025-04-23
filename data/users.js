@@ -30,7 +30,7 @@ async function userLogin(userEmail, userPassword) {
   const userFound = await getUserByEmail(email);
 
   if (!userFound) throwError(`User with email ${email} not found.`);
-  const passwordMatch = await bcrypt.compare(password, userFound.password);
+  const passwordMatch = await bcrypt.compare(password, userFound.hashPassword);
 
   if (!passwordMatch) throwError(`${password} is incorrect, please try again.`);
 
