@@ -59,7 +59,7 @@ export const exportToCSV = async () => {
     return filePath;
 };
 
-// Export data as PDF
+
 export const exportToPDF = async () => {
     const projectCollection = await projects();
     const data = await projectCollection.find({}).toArray();
@@ -68,18 +68,46 @@ export const exportToPDF = async () => {
         throw new Error('No projects found to export');
     }
 
+    // Define the export directory
     const exportDir = path.join('public', 'exports');
-    fs.mkdirSync(exportDir, { recursive: true });
+    
+    // Ensure the export directory exists
+    try {
+        fs.mkdirSync(exportDir, { recursive: true });
+        console.log(`Directory created or already exists: ${exportDir}`);
+    } catch (err) {
+        console.error(`Error creating directory: ${err.message}`);
+        throw new Error('Failed to create export directory');
+    }
 
     const filePath = path.join(exportDir, 'projects.pdf');
     const doc = new PDFDocument();
-    doc.pipe(fs.createWriteStream(filePath));
+    
+    // Write the PDF to the file path
+    try {
+        doc.pipe(fs.createWriteStream(filePath));
+    } catch (err) {
+        console.error(`Error creating PDF file stream: ${err.message}`);
+        throw new Error('Failed to create PDF file stream');
+    }
 
+    // Add a title for the PDF
+    doc.fontSize(18).text('NYC Capital Budget Projects', { align: 'center' });
+    doc.moveDown(2); // Move down to give space for the next section
+
+    // Add the table headers
+    doc.fontSize(12).text('ID | Reported | Fiscal Year | Borough | Title | Sponsor | Award', { align: 'left' });
+    doc.moveDown(0.5); // Move down slightly after the header
+
+    // Iterate over the projects and add each project's data to the PDF
     data.forEach((item, index) => {
-        doc.text(`${index + 1}: ${JSON.stringify(item)}`, { paragraphGap: 10 });
+        doc.fontSize(10).text(`${index + 1}. ${item.id || 'N/A'} | ${item.reported || 'N/A'} | ${item.fiscal_year || 'N/A'} | ${item.borough_full || 'N/A'} | ${item.title || 'N/A'} | ${item.sponsor || 'N/A'} | $${item.award || 0}`, { align: 'left' });
+        doc.moveDown(0.5); // Add some space between each project
     });
 
+    // Finalize the document
     doc.end();
 
-    return filePath
+    console.log(`PDF successfully saved at: ${filePath}`);
+    return filePath;
 };
