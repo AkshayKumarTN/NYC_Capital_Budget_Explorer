@@ -11,7 +11,7 @@ export const exportToCSV = async () => {
     const data = await projectCollection.find({}).toArray();
 
     if (data.length === 0) {
-        throw new Error('No projects found to export');
+        throw 'No projects found to export';
     }
 
     // Define the fields with more descriptive column names
@@ -71,7 +71,7 @@ export const exportToPDF = async () => {
     const data = await projectCollection.find({}).toArray();
 
     if (data.length === 0) {
-        throw new Error('No projects found to export');
+        throw 'No projects found to export';
     }
 
     // Define the export directory
@@ -82,7 +82,7 @@ export const exportToPDF = async () => {
         fs.mkdirSync(exportDir, { recursive: true });
     } catch (err) {
         console.error(`Error creating directory: ${err.message}`);
-        throw new Error('Failed to create export directory');
+        throw 'Failed to create export directory';
     }
 
     const filePath = path.join(exportDir, 'projects.pdf');
@@ -93,7 +93,7 @@ export const exportToPDF = async () => {
         doc.pipe(fs.createWriteStream(filePath));
     } catch (err) {
         console.error(`Error creating PDF file stream: ${err.message}`);
-        throw new Error('Failed to create PDF file stream');
+        throw 'Failed to create PDF file stream';
     }
 
     // Add a title for the PDF
