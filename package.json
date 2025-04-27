@@ -17,6 +17,7 @@
     "express-handlebars": "^8.0.1",
     "json2csv": "^6.0.0-alpha.2",
     "mongodb": "^6.13.1",
+    "pdfkit": "^0.17.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
