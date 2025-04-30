@@ -1,6 +1,7 @@
-import { userLogin } from "./users.js";
+import { userLogin, createUser } from "./users.js";
 
 
 export {
-    userLogin
+    userLogin,
+    createUser
 };

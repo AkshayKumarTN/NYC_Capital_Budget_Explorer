@@ -30,7 +30,23 @@ export function enrichData(item) {
   };
 }
 
-export function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+export function throwError(message) {
+  throw new Error(message);
 }
+
+export function validateAndReturnString(text, fieldName) {
+  if (!text || typeof text !== "string")
+    throwError(`${fieldName} should be a string`);
+  text = text.trim();
+  if (text.length === 0) throwError(`${fieldName} cannot be empty`);
+
+  return text;
+}
+
+export function validateAge(age) {
+  if (!age || typeof age !== "number" || isNaN(age)) throwError("Age should be a number");
+  if (age < 0 || age > 100) throwError("Age should be between 0 and 100");
+  if(age < 14) throwError(`You cannot register due to underage!!`);
+}
+
+export const getErrorMessage = (message) => ({errorMessage : message});

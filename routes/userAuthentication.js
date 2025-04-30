@@ -1,52 +1,74 @@
 import { Router } from "express";
-import { isValidEmail } from "../utils/helpers.js";
+import {
+  badRequest,
+  getValidatedUserCredentials,
+} from "../utils/authHelpers.js";
 import { userLogin } from "../data/index.js";
-
+import { getErrorMessage } from "../utils/helpers.js";
+import { initSession } from "../utils/sessionManager.js";
+import { authRedirect } from "../middlewares/auth.js";
 
 const router = Router();
 
+function logLoginError(error) {
+  console.error("Login Error: ", error.message);
+}
 
-router.route('/').post(async (req, res) => {
+router
+  .get("/", authRedirect, (req, res) => {
+    res.render("login");
+  })
+  .post("/", async (req, res) => {
     let loginData = req.body;
     console.log("Login data: ", loginData);
-    //make sure there is something present in the req.body
-    if (!loginData || Object.keys(loginData).length === 0) {
-        return res
-        .status(400)
-        .render('home', {
-        errorCode: 400,
-        errorMessage: "The email and password field cannnot be empty."
-    });
-    }
-    if(!loginData.userEmail || !loginData.userPassword) {
-        return res.status(400).render('home', {
-            errorCode: 400,
-            errorMessage: "Please enter a valid email and password."
-        });
-    }
-    let {userEmail, userPassword} = loginData;
 
-    //check if the email is valid
-    if(!isValidEmail(userEmail)) {
-        return res.status(400).render('home', {
-            errorCode: 400,
-            errorMessage: "Please enter a valid email."
-        });
+    //make sure there is something present in the req.body
+    if (!loginData || Object.keys(loginData).length === 0)
+      return badRequest(
+        res,
+        "The email and password field cannot be empty.",
+        "login"
+      );
+
+    //User Already logged In
+    if (req.session && req.session.user) {
+      console.log("User Already Logged In!!");
+      return res.redirect("/projects");
+    }
+
+    //Data Validation
+
+    let email, password;
+    try {
+      ({ email, password } = getValidatedUserCredentials(
+        loginData.email,
+        loginData.password
+      ));
+    } catch (error) {
+      logLoginError(error);
+      return badRequest(res, error.message, "login");
     }
 
     //call your data layer here
     try {
-        const userData = await userLogin(userEmail, userPassword);
-        return res.render('projects', {userData});
+      const userData = await userLogin(email, password);
+
+      //Set the session
+      initSession(req, userData);
+      console.log("Session data: ", req.session);
+
+      return res.redirect("/projects");
     } catch (e) {
-        return res.status(404).render('home', {
-            errorCode: 404,
-            errorMessage: `Either user email or password is incorrect. Please try again.`
-        });
+      logLoginError(e);
+      return res
+        .status(401)
+        .render(
+          "login",
+          getErrorMessage(
+            `Either user email or password is incorrect. Please try again.`
+          )
+        );
     }
-    
+  });
 
-});
-
-
-    export default router;
+export default router;
