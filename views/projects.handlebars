@@ -24,71 +24,100 @@ This handlebar file will be rendered when the following route is hit: GET http:/
           data-tab="tableTab"
         >Table</button>
         <button class="tab-link" data-tab="pieTab">Pie Chart</button>
-        <button class="tab-link" data-tab="barTab">Bar Chart</button>
+        <button class="tab-link" data-tab="barTab" >Bar Chart</button>
       </div>
+         <div id= "tableTab" class="tab-content" style="display: block;">
+            <div class="table-filters">
+              <select id="boroughSelect" class="input-select">
+                <option value="">All Boroughs</option>
+                {{#each boroughValues}}
+                  <option value="{{this}}">{{this}}</option>
+                {{/each}}
+              </select>
 
-      <div class="table-filters">
-  <select id="boroughSelect" class="input-select">
-    <option value="">All Boroughs</option>
-    {{#each boroughValues}}
-      <option value="{{this}}">{{this}}</option>
-    {{/each}}
-  </select>
+              <select id="awardSelect" class="input-select">
+                <option value="">All Fiscal Years</option>
+                {{#each fiscalYears}}
+                  <option value="{{this}}">{{this}}</option>
+                {{/each}}
+              </select>
 
-  <select id="awardSelect" class="input-select">
-    <option value="">All Fiscal Years</option>
-    {{#each awardValues}}
-      <option value="{{this}}">{{this}}</option>
-    {{/each}}
-  </select>
+              <select id="counsilDistrict" class="input-select">
+                <option value="">All Counsil District</option>
+                {{#each councilDistrict}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+              </select>
 
-  <input type="text" placeholder="Search Sponsor..." class="input-text"/>
-</div>
+              <input type="text" placeholder="Search Sponsor..." class="input-text"/>
+            </div>
 
-      <div id="tableTab" class="tab-content" style="display: block;">
-        <div class="table">
-        <table id="budgetTable">
-          <thead>
-            <tr>
-              <th>Project Description</th>
-              <th>Project Id</th>
-              <th>Borough</th>
-              <th>Amount ($)</th>
-              <th>Sponsor</th>
-              <th>Reported Year</th>
-              <th>Fiscal Year</th>
-              <th>Counsil District</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each projects}}
-              <tr>
-                <td>{{this.description}}</td>
-                <td>{{this.id}}</td>
-                <td>{{this.borough_full}}</td>
-                <td>{{this.award_formatted}}</td>
-                <td>{{this.sponsor}}</td>
-                <td>{{this.reported}}</td>
-                <td>{{this.fiscal_year}}</td>
-                <td>{{this.council_district}}</td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-        </div>
+            <div class="table-container">
+              <div class="table">
+              <table id="budgetTable">
+                <thead>
+                  <tr>
+                    <th>Project Description</th>
+                    <th>Project Id</th>
+                    <th>Borough</th>
+                    <th>Amount ($)</th>
+                    <th>Sponsor</th>
+                    <th>Reported Year</th>
+                    <th>Fiscal Year</th>
+                    <th>Counsil District</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each projects}}
+                    <tr>
+                      <td>{{this.description}}</td>
+                      <td>{{this.id}}</td>
+                      <td>{{this.borough_full}}</td>
+                      <td>{{this.award_formatted}}</td>
+                      <td>{{this.sponsor}}</td>
+                      <td>{{this.reported}}</td>
+                      <td>{{this.fiscal_year}}</td>
+                      <td>{{this.council_district}}</td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+
+            <div id="pieTab" class="tab-content" style="display: none;">
+              <!-- Pie Chart Canvas goes here -->
+              <canvas id="pieChartCanvas" width="400" height="400"></canvas>
+            </div>
+            
+            <div id="barTab" class="tab-content" style="display: none;">
+              <div class="filter-controls">
+                <select id="filterDistrict">
+                  <option value="">All Districts</option>
+                </select>
+                <select id="filterAgency">
+                  <option value="">All Agencies</option>
+                </select>
+                <select id="filterCategory">
+                  <option value="">All Categories</option>
+                </select>
+                <select id="filterYear">
+                  <option value="">All Years</option>
+                </select>
+              </div>
+              
+              <canvas id="barChartCanvas" width="800" height="600"></canvas>
+
+            </div>
+          
       </div>
-      <div id="pieTab" class="tab-content">
-
-</div>
-
-<div id="barTab" class="tab-content">
-  
-</div>
       </div>
 
       {{>footer}}
     </main>
     <script src="/public/js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </body>
 
 </html>
