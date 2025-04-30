@@ -12,17 +12,23 @@ export const badRequest = (res, message, redirectPage) => {
   return res.status(400).render(redirectPage, getErrorMessage(message));
 };
 
-export const getValidatedUserCredentials = (userEmail, userPassword) => {
-  userEmail = validateAndReturnString(userEmail, "Email");
-  userPassword = validateAndReturnString(userPassword, "Password");
+export const getValidatedUserCredentials = (email, password) => {
+  email = validateAndReturnString(email, "Email");
+  password = validateAndReturnString(password, "Password");
 
   //check if the email is valid
-  if (!isValidEmail(userEmail))
+  if (!isValidEmail(email))
     throwError("Please enter a valid email address.");
 
+  if(password.length < 8) throwError("Password must be atleast 8 characters");
+  if(!/[a-z]/.test(password)) throwError("Password must have atleast 1 lowercase letter");
+  if(!/[A-Z]/.test(password)) throwError("Password must have atleast 1 uppercase letter");
+  if(!/\d/.test(password)) throwError("Password must have atleast 1 number");
+  if(!/[!@#$%^&*(),.?":{}|<>_\-\\[\]\/]/.test(password)) throwError("Password must have atleast 1 special character");
+
   return {
-    userEmail,
-    userPassword,
+    email,
+    password,
   };
 };
 
@@ -33,24 +39,34 @@ export function getValidatedUserInfo(userData) {
     email,
     password,
     confirmPassword,
+    state = "New York",
     city,
-    state,
     gender,
     age,
   } = userData;
 
   firstName = validateAndReturnString(firstName, "firstName");
   lastName = validateAndReturnString(lastName, "lastName");
-  email = validateAndReturnString(email, "email");
-  password = validateAndReturnString(password, "password");
+  
+  ({email, password} = getValidatedUserCredentials(
+    email,
+    password
+  ));
+  
   confirmPassword = validateAndReturnString(confirmPassword, "confirmPassword");
   city = validateAndReturnString(city, "city");
   state = validateAndReturnString(state, "state");
   gender = validateAndReturnString(gender, "gender");
+  age = parseInt(age);
   validateAge(age);
 
-  //check if the email is valid
-  if (!isValidEmail(email)) throwError("Please enter a valid email address.");
+  state = state.toLowerCase();
+  if(state !== "new york" && state !== "ny") throwError("Sorry this application is built only for the state of New York");
+  
+  gender = gender.toLowerCase();
+  if(!["male", "female", "other"].includes(gender) && !["m", "f", "o"].includes(gender)) throwError("Provide a valid gender");
+  
+  
 
   //check if the password and confirmPassword are same
   if (password !== confirmPassword)

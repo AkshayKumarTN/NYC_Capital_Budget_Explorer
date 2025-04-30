@@ -44,8 +44,9 @@ export function validateAndReturnString(text, fieldName) {
 }
 
 export function validateAge(age) {
-  if (!age || typeof age !== "number") throwError("Age should be a number");
+  if (!age || typeof age !== "number" || isNaN(age)) throwError("Age should be a number");
   if (age < 0 || age > 100) throwError("Age should be between 0 and 100");
+  if(age < 14) throwError(`You cannot register due to underage!!`);
 }
 
 export const getErrorMessage = (message) => ({errorMessage : message});

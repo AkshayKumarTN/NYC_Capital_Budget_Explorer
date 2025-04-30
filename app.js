@@ -5,7 +5,7 @@ import { engine } from "express-handlebars";
 import configRoutes from "./routes/index.js";
 import { requireLogin, idleTime } from "./middlewares/auth.js";
 import session from "express-session";
-import { unless } from "express-unless";
+import { logRequest } from "./middlewares/common.js";
 
 dotenv.config();
 const app = express();
@@ -22,6 +22,7 @@ app.use(
   })
 );
 
+app.use("/public", express.static("public"));
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
@@ -29,13 +30,12 @@ app.set("views", "./views");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(logRequest);
+
 //Session Middlewares
 app.use(idleTime);
 
-const publicPaths = ["/", "/login", "/signup", "/forgot-password"];
-requireLogin.unless = unless;
-
-app.use(requireLogin.unless({ path: publicPaths }));
+app.use(requireLogin);
 
 configRoutes(app);
 
