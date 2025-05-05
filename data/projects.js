@@ -1,7 +1,7 @@
 import { all } from "axios";
 import { projects } from "../config/mongoCollections.js";
 
-const getAllProjects = async () => {
+export const getAllProjects = async () => {
   const projectsCollection = await projects();
   let allProjects = await projectsCollection.find({}).toArray();
 
@@ -17,4 +17,15 @@ const getAllProjects = async () => {
   return allProjects;
 };
 
-export { getAllProjects };
+
+export const getProjectById = async (id) => {
+  // inputStringCheck(id, 'ID');
+  id = id.trim();
+  // if (!ObjectId.isValid(id)) throw 'Error: invalid object ID';
+  const projectsCollection = await projects();
+  const project = await projectsCollection.findOne({ id: id });
+  if (project === null) throw 'Error: No Project with that id';
+  project._id = project._id.toString();
+  return project;
+};
+

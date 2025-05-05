@@ -1,0 +1,50 @@
+<!-- views/projectDetail.handlebars -->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Project Details</title>
+  <link rel="stylesheet" href="/public/css/projectDetail.css" />
+</head>
+
+<body>
+  <main>
+    {{>navbar}}
+
+    <div class="project-detail-container">
+      <h1>Project Details</h1>
+
+      <div class="project-info">
+        <p><strong>Project Description:</strong> {{project.description}}</p>
+        <p><strong>Project ID:</strong> {{project.id}}</p>
+        <p><strong>Borough:</strong> {{project.borough_full}}</p>
+        <p><strong>Amount:</strong> {{project.award}}</p>
+        <p><strong>Sponsor:</strong> {{project.sponsor}}</p>
+        <p><strong>Reported Year:</strong> {{project.reported}}</p>
+        <p><strong>Fiscal Year:</strong> {{project.fiscal_year}}</p>
+        <p><strong>Council District:</strong> {{project.council_district}}</p>
+      </div>
+
+      <div class="feedback-form">
+        <h2>Leave Feedback</h2>
+        <form action="/projects/{{project.id}}/feedback" method="POST">
+          <textarea name="feedbackText" rows="4" cols="50" required placeholder="Enter your feedback..."></textarea><br />
+          <button type="submit">Submit Feedback</button>
+        </form>
+      </div>
+
+      <div class="feedback-list">
+        <h3>Latest Feedback</h3>
+        <ul>
+          {{#each feedbacks}}
+            <li>{{this.text}} <small>({{this.created_at}})</small></li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+
+    {{>footer}}
+  </main>
+</body>
+
+</html>

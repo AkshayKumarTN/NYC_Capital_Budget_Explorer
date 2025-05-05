@@ -1,13 +1,5 @@
 import { Router } from "express";
-// import {
-//     getAllProjects,
-//     getProjectById,
-//     getProjectByBorough,
-//     getProjectByNeighborhood,
-//     getProjectByFiscalYear,
-//     getProjectByDescription,
-// } from '../data/projects.js';
-import { getAllProjects } from "../data/projects.js";
+import * as ProjectsMethods from '../data/projects.js';
 
 const router = Router();
 
@@ -19,7 +11,8 @@ router.route("/").get(async (req, res) => {
     const sponsorSet = new Set();
     const councilDistrictSet = new Set();
 
-    const projects = await getAllProjects();
+    const projects = await ProjectsMethods.getAllProjects();
+    console.log(projects);
     projects.forEach((proj) => {
       if (proj.borough_full) boroughSet.add(proj.borough_full);
       if (proj.award_formatted) awardSet.add(proj.award_formatted);
@@ -39,6 +32,22 @@ router.route("/").get(async (req, res) => {
     console.error("Error loading projects", error);
     res.status(500).render("error");
   }
+});
+
+router.get('/:id', async (req, res) => {
+  const projectId = req.params.id;
+  const project = await ProjectsMethods.getProjectById(projectId);
+  // const feedbacks = await ProjectsMethods.getLatestFeedbacks(projectId, 10);
+  const feedbacks = null;
+  // return res.json(projectId);
+  res.render('projectDetail', { project, feedbacks });
+});
+
+router.post('/projects/:id/feedback', async (req, res) => {
+  const projectId = req.params.id;
+  const feedbackText = req.body.feedbackText;
+
+  // await saveFeedback(projectId, feedbackText);
 });
 
 export default router;
