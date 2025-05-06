@@ -3,17 +3,18 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Project Details</title>
+  <title>{{project.title}}</title>
   <link rel="stylesheet" href="/public/css/projectDetail.css" />
 </head>
 
 <body>
   <main>
-    {{>navbar}}
-
+    {{!-- {{>navbar}} --}}
+    <div class="back-button-container">
+      <a href="/projects" class="back-button">← Back to All Projects</a>
+    </div>
     <div class="project-detail-container">
-      <h1>Project Details</h1>
-
+      <h1>{{project.title}}</h1>
       <div class="project-info">
         <p><strong>Project Description:</strong> {{project.description}}</p>
         <p><strong>Project ID:</strong> {{project.id}}</p>
@@ -28,7 +29,8 @@
       <div class="feedback-form">
         <h2>Leave Feedback</h2>
         <form action="/projects/{{project.id}}/feedback" method="POST">
-          <textarea name="feedbackText" rows="4" cols="50" required placeholder="Enter your feedback..."></textarea><br />
+          <textarea name="feedbackText" rows="4" cols="50" required
+            placeholder="Enter your feedback..."></textarea><br />
           <button type="submit">Submit Feedback</button>
         </form>
       </div>
@@ -37,13 +39,12 @@
         <h3>Latest Feedback</h3>
         <ul>
           {{#each feedbacks}}
-            <li>{{this.text}} <small>({{this.created_at}})</small></li>
+          <li>{{this.text}} <small>({{this.created_at}})</small></li>
           {{/each}}
         </ul>
       </div>
+      {{>footer}}
     </div>
-
-    {{>footer}}
   </main>
 </body>
 
