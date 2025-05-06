@@ -70,7 +70,7 @@ This handlebar file will be rendered when the following route is hit: GET http:/
                 <tbody>
                   {{#each projects}}
                     <tr>
-                      <td>{{this.description}}</td>
+                      <td><a href="/projects/{{this.id}}">{{this.description}}</a></td>
                       <td>{{this.id}}</td>
                       <td>{{this.borough_full}}</td>
                       <td>{{this.award_formatted}}</td>

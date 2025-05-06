@@ -1,0 +1,164 @@
+/* Navigation Bar */
+
+.nav {
+    background-color: #2b69f7;
+    position: absolute;
+    font-family: "Arial", sans-serif;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 25px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 30px;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li a {
+    color: white;
+    font-weight: Bold;
+    text-decoration: none;
+    padding: 10px 15px;
+    width: 100px;
+    height: 33px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  nav ul li a:hover {
+    color: white;
+    background-color: #333;
+    border-radius: 5px;
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f5f7fa;
+    color: #333;
+  }
+  .back-button-container {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 900px;
+    margin: 7rem auto 1rem;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+  
+  .back-button {
+    padding: 0.5rem 1rem;
+    background-color: #eeeeee;
+    color: #0055a5;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: #0055a5;
+    color: white;
+  }
+  .project-detail-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  
+  /* .project-detail-container {
+    padding: 1rem;
+    box-sizing: border-box;
+  } */
+  
+  .project-detail-container h1,
+  .feedback-form h2,
+  .feedback-list h3 {
+    color: #0055a5;
+    margin-bottom: 1rem;
+  }
+  
+  .project-info p {
+    margin: 0.4rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .project-info p strong {
+    color: #222;
+  }
+  
+  .feedback-form {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+  }
+  
+  textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+    background-color: #fefefe;
+    margin-bottom: 0.5rem;
+    box-sizing: border-box;
+  }
+  
+  button[type="submit"] {
+    background-color: #0055a5;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #004080;
+  }
+  
+  .feedback-list {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+  }
+  
+  .feedback-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .feedback-list li {
+    background-color: #f1f4f9;
+    margin: 0.5rem 0;
+    padding: 0.8rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+  
+  .feedback-list small {
+    color: #666;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+  }
+  
