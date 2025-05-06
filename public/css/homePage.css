@@ -363,7 +363,7 @@ table {
 
 .table {
   /* max-height: max-content; */
-  max-height: 700px;
+  max-height: 600px;
   /* margin: 20px; */
   overflow-y: auto;
   border: 1px solid #ddd;
@@ -399,6 +399,25 @@ th {
   gap: 15px;
   padding: 10px;
   /* margin-bottom: 10px; */
+}
+
+.pie-dimensions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px auto;
+}
+
+.pie-dimensions label {
+  font-weight: 500;
+}
+
+.pieChartCanvas {
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  display: block;
 }
 
 #budgetTable td:nth-child(1),

@@ -8,7 +8,7 @@ router.route("/").get(async (req, res) => {
     const boroughSet = new Set();
     const awardSet = new Set();
     const yearSet = new Set();
-    const sponsorSet = new Set();
+    // const sponsorSet = new Set();
     const councilDistrictSet = new Set();
 
     const projects = await ProjectsMethods.getAllProjects();
@@ -16,9 +16,13 @@ router.route("/").get(async (req, res) => {
     projects.forEach((proj) => {
       if (proj.borough_full) boroughSet.add(proj.borough_full);
       if (proj.award_formatted) awardSet.add(proj.award_formatted);
-      if (proj.council_district) councilDistrictSet.add(proj.council_district);
+
+      if (proj.councilDistrictToStr)
+        councilDistrictSet.add(...proj.councilDistrictToStr[1]);
       if (proj.fiscal_year) yearSet.add(proj.fiscal_year);
     });
+
+    console.log(councilDistrictSet);
 
     res.render("projects", {
       title: "Projects",

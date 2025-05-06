@@ -1,5 +1,6 @@
 import { all } from "axios";
 import { projects } from "../config/mongoCollections.js";
+import { neighborhoodMap } from "../utils/borough_neighborhood_map.js";
 
 export const getAllProjects = async () => {
   const projectsCollection = await projects();
@@ -7,10 +8,19 @@ export const getAllProjects = async () => {
 
   allProjects = allProjects.map((project) => {
     const award = Number(project.award || 0);
+    const neighborhoodString = project.borough + "-" + project.council_district;
 
     return {
       ...project,
       award_formatted: award.toLocaleString("en-US"),
+      // allNeighborhoods: allNeighborhoods,
+      councilDistrictToStr: Object.entries(neighborhoodMap).find(
+        ([key]) => key === neighborhoodString
+      )
+        ? Object.entries(neighborhoodMap).find(
+            ([key]) => key === neighborhoodString
+          )
+        : "NA",
     };
   });
 
