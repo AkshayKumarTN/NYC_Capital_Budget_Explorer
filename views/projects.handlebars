@@ -28,28 +28,30 @@ This handlebar file will be rendered when the following route is hit: GET http:/
       </div>
          <div id= "tableTab" class="tab-content" style="display: block;">
             <div class="table-filters">
-              <select id="boroughSelect" class="input-select">
+              <select id="searchBorough" class="input-select">
                 <option value="">All Boroughs</option>
                 {{#each boroughValues}}
                   <option value="{{this}}">{{this}}</option>
                 {{/each}}
               </select>
 
-              <select id="awardSelect" class="input-select">
+              <select id="searchFy" class="input-select">
                 <option value="">All Fiscal Years</option>
                 {{#each fiscalYears}}
                   <option value="{{this}}">{{this}}</option>
                 {{/each}}
               </select>
 
-              <select id="counsilDistrict" class="input-select">
+              <select id="searchDistrict" class="input-select">
                 <option value="">All Counsil District</option>
                 {{#each councilDistrict}}
                 <option value="{{this}}">{{this}}</option>
                 {{/each}}
               </select>
 
-              <input type="text" placeholder="Search Sponsor..." class="input-text"/>
+              <input id="searchSponsor" type="text" placeholder="Search Sponsor..." class="input-text"/>
+              <button id="searchFilters" class="primary-button">Search</button>
+              <button id="resetFilters" class="secondary-button">Reset</button>
             </div>
 
             <div class="table-container">
@@ -77,7 +79,7 @@ This handlebar file will be rendered when the following route is hit: GET http:/
                       <td>{{this.sponsor}}</td>
                       <td>{{this.reported}}</td>
                       <td>{{this.fiscal_year}}</td>
-                      <td>{{this.council_district}}</td>
+                      <td>{{this.councilDistrictToStr}}</td>
                     </tr>
                   {{/each}}
                 </tbody>
@@ -87,9 +89,47 @@ This handlebar file will be rendered when the following route is hit: GET http:/
           </div>
 
             <div id="pieTab" class="tab-content" style="display: none;">
-              <!-- Pie Chart Canvas goes here -->
-              <canvas id="pieChartCanvas" width="400" height="400"></canvas>
+              <div class="table-filters">
+              <select id="pieSearchBorough" class="input-select">
+                <option value="">All Boroughs</option>
+                {{#each boroughValues}}
+                  <option value="{{this}}">{{this}}</option>
+                {{/each}}
+              </select>
+
+              <select id="pieSearchFy" class="input-select">
+                <option value="">All Fiscal Years</option>
+                {{#each fiscalYears}}
+                  <option value="{{this}}">{{this}}</option>
+                {{/each}}
+              </select>
+
+              <select id="pieSearchDistrict" class="input-select">
+                <option value="">All Counsil District</option>
+                {{#each councilDistrict}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+              </select>
+
+              <input id="pieSearchSponsor" type="text" placeholder="Search Sponsor..." class="input-text"/>
+              <button id="pieSearchFilters" class="primary-button">Search</button>
+              <button id="pieResetFilters" class="secondary-button">Reset</button>
             </div>
+              <div class = "pieDimensions">
+              <label for="groupByDropdown">Group By:</label>
+              <select id="groupByDropdown" class="input-select">
+                <option value="borough">Borough</option>
+                <option value="reportedYear">Reported Year</option>
+                {{!-- <option value="councilDistrict">Council District</option> --}}
+              </select>
+              </div>
+              <canvas id="pieChartCanvas" class="pieChartCanvas" width="400" height="400"></canvas>
+              <p id="noPieDataMessage" style="display: none; text-align: center;">
+                No data available for the selected filters.
+              </p>
+
+            </div>
+
             
             <div id="barTab" class="tab-content" style="display: none;">
               <div class="filter-controls">
