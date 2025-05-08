@@ -23,7 +23,19 @@ app.use(
 );
 
 app.use("/public", express.static("public"));
-app.engine("handlebars", engine());
+app.engine('handlebars', engine({
+  helpers: {
+    eq: (a, b) => a === b,
+    range: function (from, to) {
+      const rangeArray = [];
+      for (let i = from; i <= to; i++) {
+        rangeArray.push(i);
+      }
+      return rangeArray;
+    }
+  }
+}));
+
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 
