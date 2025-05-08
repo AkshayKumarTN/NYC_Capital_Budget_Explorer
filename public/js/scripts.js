@@ -2,6 +2,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const tabLinks = document.querySelectorAll(".tab-link");
   const tabContents = document.querySelectorAll(".tab-content");
 
+
+  document.getElementById('searchFilters').addEventListener('click', () => {
+    const form = document.getElementById('filterForm');
+    const params = new URLSearchParams(new FormData(form));
+    window.location.href = `/projects?${params.toString()}`;
+  });
+
+  document.getElementById('resetFilters').addEventListener('click', () => {
+    document.getElementById('filterForm').reset();
+    window.location.href = '/projects';
+  });
+
+
+
+
   // console.log("button clicked");
   tabLinks.forEach((btn) => {
     btn.addEventListener("click", (event) => {

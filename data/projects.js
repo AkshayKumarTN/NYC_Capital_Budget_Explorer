@@ -1,30 +1,62 @@
-import { all } from "axios";
 import { projects } from "../config/mongoCollections.js";
-import { neighborhoodMap } from "../utils/borough_neighborhood_map.js";
+
 
 export const getAllProjects = async () => {
   const projectsCollection = await projects();
-  let allProjects = await projectsCollection.find({}).toArray();
+  let allProjects = await projectsCollection.find().toArray();
 
   allProjects = allProjects.map((project) => {
     const award = Number(project.award || 0);
-    const neighborhoodString = project.borough + "-" + project.council_district;
+    
 
     return {
       ...project,
       award_formatted: award.toLocaleString("en-US"),
-      // allNeighborhoods: allNeighborhoods,
-      councilDistrictToStr: Object.entries(neighborhoodMap).find(
-        ([key]) => key === neighborhoodString
-      )
-        ? Object.entries(neighborhoodMap).find(
-            ([key]) => key === neighborhoodString
-          )
-        : "NA",
     };
   });
 
   return allProjects;
+};
+
+
+export const getProjects = async (page = 1, limit = 500, filters = {}) => {
+  const skip = (page - 1) * limit;
+  const projectsCollection = await projects();
+
+  const query = {};
+  if (filters.borough) query.borough_full = filters.borough;
+  if (filters.fy) query.fiscal_year = filters.fy;
+  if (filters.district) query.council_district = filters.district;
+  if (filters.neighborhood) query.neighborhoods = filters.neighborhood;
+  if (filters.sponsor)
+    query.sponsor = { $regex: filters.sponsor, $options: 'i' };
+
+  const total = await projectsCollection.countDocuments(query);
+  const allProjects = await projectsCollection.find(query).skip(skip).limit(limit).toArray();
+
+  const pages = Math.ceil(total / limit);
+  const boroughValues = await projectsCollection.distinct("borough_full");
+  const fiscalYears = await projectsCollection.distinct("fiscal_year");
+  const councilDistrict = await projectsCollection.distinct("council_district");
+  let neighborhoodValues = await projectsCollection.distinct("neighborhoods");
+  neighborhoodValues = neighborhoodValues
+    .filter(n => typeof n === 'string' && n.trim() !== '')
+    .sort((a, b) => a.localeCompare(b));
+
+  const formatted = allProjects.map((project) => ({
+    ...project,
+    award_formatted: Number(project.award || 0).toLocaleString("en-US"),
+  }));
+
+  return {
+    projects: formatted,
+    currentPage: page,
+    totalPages: pages,
+    boroughValues,
+    fiscalYears,
+    councilDistrict,
+    neighborhoodValues
+  };
 };
 
 

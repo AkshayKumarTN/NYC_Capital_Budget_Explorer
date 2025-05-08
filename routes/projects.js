@@ -4,38 +4,38 @@ import * as ProjectsMethods from '../data/projects.js';
 const router = Router();
 
 router.route("/").get(async (req, res) => {
-  try {
-    const boroughSet = new Set();
-    const awardSet = new Set();
-    const yearSet = new Set();
-    // const sponsorSet = new Set();
-    const councilDistrictSet = new Set();
+  const page = parseInt(req.query.page) || 1;
+  const limit = 500;
 
-    const projects = await ProjectsMethods.getAllProjects();
-    console.log(projects);
-    projects.forEach((proj) => {
-      if (proj.borough_full) boroughSet.add(proj.borough_full);
-      if (proj.award_formatted) awardSet.add(proj.award_formatted);
+  const filters = {
+    borough: req.query.borough,
+    fy: req.query.fy,
+    district: req.query.district,
+    neighborhood: req.query.neighborhood,
+    sponsor: req.query.sponsor
+  };
 
-      if (proj.councilDistrictToStr)
-        councilDistrictSet.add(...proj.councilDistrictToStr[1]);
-      if (proj.fiscal_year) yearSet.add(proj.fiscal_year);
-    });
+  const {
+    projects, 
+    currentPage,
+    totalPages,
+    boroughValues,
+    fiscalYears,
+    councilDistrict,
+    neighborhoodValues,
+  } = await ProjectsMethods.getProjects(page, limit, filters);
 
-    console.log(councilDistrictSet);
-
-    res.render("projects", {
-      title: "Projects",
-      projects,
-      boroughValues: boroughSet,
-      awardValues: awardSet,
-      councilDistrict: councilDistrictSet,
-      fiscalYears: yearSet,
-    });
-  } catch (error) {
-    console.error("Error loading projects", error);
-    res.status(500).render("error");
-  }
+  res.render("projects", {
+    title: "Projects",
+    projects,
+    boroughValues,
+    neighborhoodValues,
+    councilDistrict,
+    fiscalYears,
+    currentPage,
+    totalPages,
+    selected: filters
+  });
 });
 
 router.get('/:id', async (req, res) => {
