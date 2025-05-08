@@ -24,6 +24,7 @@ router.route("/").get(async (req, res) => {
     councilDistrict,
     neighborhoodValues,
   } = await ProjectsMethods.getProjects(page, limit, filters);
+  const yearRange = await ProjectsMethods.getFiscalYearRange();
 
   res.render("projects", {
     title: "Projects",
@@ -34,9 +35,29 @@ router.route("/").get(async (req, res) => {
     fiscalYears,
     currentPage,
     totalPages,
-    selected: filters
+    selected: filters,
+    yearRange,
   });
 });
+
+router.get('/bar-data', async (req, res) => {
+  try {
+    const { startYear, endYear, borough, district } = req.query;
+    const filters = {
+      startYear: parseInt(startYear),
+      endYear: parseInt(endYear),
+      borough_full: borough,
+      council_district: district
+    };
+
+    const data = await ProjectsMethods.getTopProjectsByAmount(filters, 10);
+    res.json(data);
+  } catch (e) {
+    console.error('Bar chart data error:', e);
+    res.status(500).json({ error: 'Failed to load bar chart data' });
+  }
+});
+
 
 router.get('/:id', async (req, res) => {
   const projectId = req.params.id;
@@ -53,5 +74,8 @@ router.post('/projects/:id/feedback', async (req, res) => {
 
   // await saveFeedback(projectId, feedbackText);
 });
+
+
+
 
 export default router;

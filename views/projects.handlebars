@@ -168,23 +168,39 @@ This handlebar file will be rendered when the following route is hit: GET http:/
             
             <div id="barTab" class="tab-content" style="display: none;">
               <div class="filter-controls">
+                <label for="yearRangeStart">From:</label>
+                <input type="range" id="yearRangeStart" min="{{yearRange.minYear}}" max="{{yearRange.maxYear}}" value="{{yearRange.minYear}}" />
+
+                <label for="yearRangeEnd">To:</label>
+                <input type="range" id="yearRangeEnd" min="{{yearRange.minYear}}" max="{{yearRange.maxYear}}" value="{{yearRange.maxYear}}" />
+
+                <div id="yearRangeDisplay">FY{{yearRange.minYear}} - FY{{yearRange.maxYear}}</div>
+                <span id="yearError" style="color: red; display: none;">ERROR: From year cannot be greater than To year.</span>
+                <select id="filterBorough">
+                  <option value="">All Boroughs</option>
+                  {{#each boroughValues}}
+                  <option value="{{this}}">{{this}}</option>
+                  {{/each}}
+                </select>
+            
                 <select id="filterDistrict">
                   <option value="">All Districts</option>
+                  {{#each councilDistrict}}
+                  <option value="{{this}}">{{this}}</option>
+                  {{/each}}
                 </select>
-                <select id="filterAgency">
-                  <option value="">All Agencies</option>
-                </select>
-                <select id="filterCategory">
-                  <option value="">All Categories</option>
-                </select>
-                <select id="filterYear">
-                  <option value="">All Years</option>
-                </select>
-              </div>
-              
-              <canvas id="barChartCanvas" width="800" height="600"></canvas>
+            
+                <button id="applyBarFilters" class="primary-button">Apply</button>
+                <button id="resetBarFilters" class="secondary-button">Clear</button>
 
+              </div>
+            
+              <canvas id="barChartCanvas" width="1000" height="1000"></canvas>
+              <p id="noBarDataMessage" style="display: none; text-align: center;">
+                No data available for the selected filters.
+              </p>
             </div>
+
           
       </div>
       </div>

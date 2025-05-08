@@ -60,6 +60,41 @@ export const getProjects = async (page = 1, limit = 500, filters = {}) => {
 };
 
 
+export const getTopProjectsByAmount = async (filters = {}, limit = 10) => {
+  const collection = await projects();
+
+  const match = {};
+  if (filters.startYear && filters.endYear) {
+    match.fiscal_year = {
+      $gte: `FY${filters.startYear}`,
+      $lte: `FY${filters.endYear}`
+    };
+  }
+  if (filters.borough_full) match.borough_full = filters.borough_full;
+  if (filters.council_district) match.council_district = filters.council_district;
+
+  const results = await collection.aggregate([
+    { $match: match },
+    { $sort: { award: -1 } },
+    { $limit: limit },
+    {
+      $project: {
+        _id: 0,
+        id: "$id",
+        label: "$id",
+        description: "$description",
+        value: "$award",
+        borough: "$borough_full",
+        fiscal_year: "$fiscal_year"
+      }
+    }
+  ]).toArray();
+
+  return results;
+};
+
+
+
 export const getProjectById = async (id) => {
   // inputStringCheck(id, 'ID');
   id = id.trim();
@@ -71,3 +106,18 @@ export const getProjectById = async (id) => {
   return project;
 };
 
+
+export const getFiscalYearRange = async () => {
+  const collection = await projects();
+  const years = await collection.distinct("fiscal_year");
+
+  const numericYears = years
+    .map(y => parseInt(String(y).replace('FY', '')))
+    .filter(n => !isNaN(n));
+
+  const minYear = Math.min(...numericYears);
+  const maxYear = Math.max(...numericYears);
+
+  return { minYear, maxYear };
+};
+         
