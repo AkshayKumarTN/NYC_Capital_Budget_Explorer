@@ -4,35 +4,60 @@ import * as ProjectsMethods from '../data/projects.js';
 const router = Router();
 
 router.route("/").get(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = 500;
+
+  const filters = {
+    borough: req.query.borough,
+    fy: req.query.fy,
+    district: req.query.district,
+    neighborhood: req.query.neighborhood,
+    sponsor: req.query.sponsor
+  };
+
+  const {
+    projects, 
+    currentPage,
+    totalPages,
+    boroughValues,
+    fiscalYears,
+    councilDistrict,
+    neighborhoodValues,
+  } = await ProjectsMethods.getProjects(page, limit, filters);
+  const yearRange = await ProjectsMethods.getFiscalYearRange();
+
+  res.render("projects", {
+    title: "Projects",
+    projects,
+    boroughValues,
+    neighborhoodValues,
+    councilDistrict,
+    fiscalYears,
+    currentPage,
+    totalPages,
+    selected: filters,
+    yearRange,
+  });
+});
+
+router.get('/bar-data', async (req, res) => {
   try {
-    const boroughSet = new Set();
-    const awardSet = new Set();
-    const yearSet = new Set();
-    const sponsorSet = new Set();
-    const councilDistrictSet = new Set();
+    const { startYear, endYear, borough, district } = req.query;
+    const filters = {
+      startYear: parseInt(startYear),
+      endYear: parseInt(endYear),
+      borough_full: borough,
+      council_district: district
+    };
 
-    const projects = await ProjectsMethods.getAllProjects();
-    console.log(projects);
-    projects.forEach((proj) => {
-      if (proj.borough_full) boroughSet.add(proj.borough_full);
-      if (proj.award_formatted) awardSet.add(proj.award_formatted);
-      if (proj.council_district) councilDistrictSet.add(proj.council_district);
-      if (proj.fiscal_year) yearSet.add(proj.fiscal_year);
-    });
-
-    res.render("projects", {
-      title: "Projects",
-      projects,
-      boroughValues: boroughSet,
-      awardValues: awardSet,
-      councilDistrict: councilDistrictSet,
-      fiscalYears: yearSet,
-    });
-  } catch (error) {
-    console.error("Error loading projects", error);
-    res.status(500).render("error");
+    const data = await ProjectsMethods.getTopProjectsByAmount(filters, 10);
+    res.json(data);
+  } catch (e) {
+    console.error('Bar chart data error:', e);
+    res.status(500).json({ error: 'Failed to load bar chart data' });
   }
 });
+
 
 router.get('/:id', async (req, res) => {
   const projectId = req.params.id;
@@ -49,5 +74,8 @@ router.post('/projects/:id/feedback', async (req, res) => {
 
   // await saveFeedback(projectId, feedbackText);
 });
+
+
+
 
 export default router;
