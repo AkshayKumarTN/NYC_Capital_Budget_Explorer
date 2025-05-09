@@ -26,7 +26,7 @@ export const getProjects = async (page = 1, limit = 500, filters = {}) => {
   const query = {};
   if (filters.borough) query.borough_full = filters.borough;
   if (filters.fy) query.fiscal_year = filters.fy;
-  if (filters.district) query.council_district = filters.district;
+  if (filters.district) query.council_district = parseInt(filters.district);
   if (filters.neighborhood) query.neighborhoods = filters.neighborhood;
   if (filters.sponsor)
     query.sponsor = { $regex: filters.sponsor, $options: 'i' };
@@ -71,7 +71,7 @@ export const getTopProjectsByAmount = async (filters = {}, limit = 10) => {
     };
   }
   if (filters.borough_full) match.borough_full = filters.borough_full;
-  if (filters.council_district) match.council_district = filters.council_district;
+  if (filters.council_district) match.council_district = parseInt(filters.council_district);
 
   const results = await collection.aggregate([
     { $match: match },

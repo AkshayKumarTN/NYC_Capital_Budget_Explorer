@@ -164,30 +164,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //BAR CHART
   function createBarChart() {
-
+      const startYear = parseInt(document.getElementById('yearRangeStart').value);
+      const endYear = parseInt(document.getElementById('yearRangeEnd').value)
       loadBarChart(); // Load top 10 on page load
     // ADDING THE BAR CHART FILTERS AND SEARCH
       document.getElementById('applyBarFilters').addEventListener('click', () => {
         
-        const startYear = parseInt(document.getElementById('yearRangeStart').value);
-        const endYear = parseInt(document.getElementById('yearRangeEnd').value);
+        const startYear_filter = parseInt(document.getElementById('yearRangeStart').value);
+        const endYear_filter = parseInt(document.getElementById('yearRangeEnd').value);
         const errorSpan = document.getElementById('yearError');
         const borough = document.getElementById('filterBorough').value;
         const district = document.getElementById('filterDistrict').value;
+        
 
-        if(endYear && startYear && endYear < startYear) {
+        if(endYear_filter && startYear_filter && endYear_filter < startYear_filter) {
           errorSpan.style.display = 'block';
             return; // Stop search
           } else {
             errorSpan.style.display = 'none';
           }
 
-        loadBarChart({  startYear, endYear, borough, district });
+        loadBarChart({  startYear_filter, endYear_filter, borough, district });
         });
 
       // Reset filters and reload full chart
       document.getElementById('resetBarFilters').addEventListener('click', () => {
-        document.getElementById('filterYear').value = '';
+        document.getElementById('yearRangeStart').value = startYear;
+        document.getElementById('yearRangeEnd').value = endYear;
+        document.getElementById('yearRangeDisplay').innerText = `FY${startYear} - FY${endYear}`;
         document.getElementById('filterBorough').value = '';
         document.getElementById('filterDistrict').value = '';
         loadBarChart(); // reload full chart
