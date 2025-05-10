@@ -192,10 +192,14 @@ This handlebar file will be rendered when the following route is hit: GET http:/
             
                 <button id="applyBarFilters" class="primary-button">Apply</button>
                 <button id="resetBarFilters" class="secondary-button">Clear</button>
-
+                <button id="downloadBarChart"  class="secondary-button" >Download Chart</button>
               </div>
             
               <canvas id="barChartCanvas" width="1000" height="1000"></canvas>
+              <div id="barChartLegend" class="print-only">
+                <!-- Legend entries will go here dynamically -->
+              </div>
+
               <p id="noBarDataMessage" style="display: none; text-align: center;">
                 No data available for the selected filters.
               </p>

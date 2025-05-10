@@ -456,3 +456,16 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: block;
+    margin-top: 20px;
+    font-size: 14px;
+    font-family: sans-serif;
+  }
+}

@@ -196,6 +196,29 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('filterDistrict').value = '';
         loadBarChart(); // reload full chart
       });
+
+      // Download chart as image
+      document.getElementById('downloadBarChart').addEventListener('click', () => {
+        const canvas = document.getElementById('barChartCanvas');
+
+        const chart = window.barChartInstance; // Get chart instance
+        const legendContainer = document.getElementById('barChartLegend');
+        legendContainer.innerHTML = '<h3>Legend</h3>';
+
+        chart.data.labels.forEach((label, index) => {
+          const amount = chart.data.datasets[0].data[index];
+          // Optional: Extend with project title/category if available
+          const extraInfo = chart.data.datasets[0].projectInfo?.[label] || ''; 
+          const div = document.createElement('div');
+          div.innerHTML = `<strong>${label}</strong>: $${amount.toLocaleString()} ${extraInfo}`;
+          legendContainer.appendChild(div);
+        });
+
+        const link = document.createElement('a');
+        link.download = 'bar_chart.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
     }
 
     //******** YEAR RANGE FILTER ******************/
