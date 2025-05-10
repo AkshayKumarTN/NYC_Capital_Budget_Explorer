@@ -355,7 +355,7 @@ a:hover {
 /* #tableTab {
   height: auto;
 } */
- /* Force horizontal scroll on overflow */
+/* Force horizontal scroll on overflow */
 .table-container {
   background-color: white;
   padding: 1rem;
@@ -367,8 +367,8 @@ a:hover {
 /* This enables vertical scrolling */
 .table-scroll-container {
   min-height: 800px;
-    max-height: 1000px;
-    overflow-y: auto;
+  max-height: 1000px;
+  overflow-y: auto;
   overflow-x: hidden;
   border-radius: 4px;
 }
@@ -398,37 +398,37 @@ a:hover {
   border-bottom: 1px solid #eee;
 }
 
- /* Optional hover effect */
- .table tr:hover {
-   background-color: #f9f9f9;
- }
+/* Optional hover effect */
+.table tr:hover {
+  background-color: #f9f9f9;
+}
 
- /* Table rows */
- .table tr {
-   height: 60px;
- }
+/* Table rows */
+.table tr {
+  height: 60px;
+}
 
- /* Pagination (same as before) */
- .pagination-controls {
-   text-align: center;
-   margin-top: 20px;
- }
+/* Pagination (same as before) */
+.pagination-controls {
+  text-align: center;
+  margin-top: 20px;
+}
 
- .page-link {
-   margin: 0 5px;
-   padding: 5px 10px;
-   text-decoration: none;
-   color: #007bff;
-   border: 1px solid #ccc;
-   border-radius: 4px;
- }
+.page-link {
+  margin: 0 5px;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #007bff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
- .page-link.active {
-   font-weight: bold;
-   background-color: #007bff;
-   color: white;
-   border-color: #007bff;
- }
+.page-link.active {
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
 
 .pie-dimensions {
   display: flex;
@@ -456,4 +456,11 @@ a:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.table-filters {
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+  /* margin-bottom: 10px; */
 }
