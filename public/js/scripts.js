@@ -190,8 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         errorSpan.style.display = "none";
       }
-
-      loadBarChart({ startYear_filter, endYear_filter, borough, district });
+      loadBarChart({ startYear: startYear_filter, endYear:endYear_filter, borough, district });
     });
 
       // Reset filters and reload full chart
@@ -238,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("filterDistrict").value = "";
       loadBarChart(); // reload full chart
     });
-  }
+  
 
   //******** YEAR RANGE FILTER ******************/
   function updateYearRangeLabel() {
