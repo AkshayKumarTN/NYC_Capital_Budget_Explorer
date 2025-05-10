@@ -2,39 +2,114 @@
 This handlebar file will be rendered when the following route is hit: GET http://localhost:3000/
  -->
 
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYC Council Project Explorer App</title>
-    <link rel="stylesheet" href="/public/css/homePage.css">
+  <meta charset="UTF-8">
+  <title>NYC Capital Budget Explorer</title>
+  <link rel="stylesheet" href="/public/css/homePage.css" />
 </head>
-
 <body>
-    <main>
-        <div id="login-form-container">
-            <p class="home-page">Sign In to NYC Explorer</p>
 
-            {{#if errorMessage}}
-            <div class="error-message">
-                <strong>Error:</strong> {{errorMessage}}
-            </div>
-            {{/if}}
+  <nav>
+    <h1>NYC Capital Budget Explorer</h1>
+    <section>
+        <a href="/login">Login</a>
+        <a href="/signup">SignUp</a>
+    </section>
+    
+  </nav>
 
-            <form class="form-container" action="/login" method="POST">
-                <input type="text" id="userEmail" name="userEmail" placeholder="E-mail" required
-                    class="{{#if errorMessage}}input-error{{/if}}">
-                <input type="password" id="userPassword" name="userPassword" placeholder="Password" required
-                    class="{{#if errorMessage}}input-error{{/if}}">
-                <input type="submit" value="Sign In" class="submit-button">
-            </form>
+  <header>
+    <h2>Explore NYC’s capital projects</h2>
+    <p>See how public funds build our city</p>
+    <a href="/login" class="btn">Start Exploring</a>
+  </header>
 
-            <p class="register">Don't have an account? <a href="/register">Register here</a></p>
+  <section class="features">
+    <h3 class="heading">Features</h3>
+    <div class="content">
+        <div class="item">
+            <img src="/public/images/icons/bank.png" alt="Bank">
+            <h4>Transparent Spending</h4>
+            <p>See where funds go across the city.</p>
         </div>
+        <div class="item">
+            <img src="/public/images/icons/comment.png" alt="Comments">
+            <h4>Project Feedback</h4>
+            <p>Leave your comments and read others’ opinions.</p>
+        </div>
+        <div class="item">
+            <img src="/public/images/icons/pie-chart.png" alt="Pie Chart">
+            <h4>Data Insights</h4>
+            <p>Analyze trends and budgets over time.</p>
+        </div>
+    </div>
+  </section>
 
-        <section class="home-page-background"></section>
-    </main>
+  <section class="steps">
+    <h3 class="heading">How It Works</h3>
+    <div class="content">
+        <div class="item">
+            <h4>Search</h4>
+            <img src="/public/images/icons/search.png" alt="Search">
+            <p>Filter by borough, year, sponsor, and more.</p>
+        </div>
+        <div class="item">
+            <h4>View</h4>
+            <img src="/public/images/icons/table-rows.png" alt="Details">
+            <p>Check details and community feedback.</p>
+        </div>
+        <div class="item">
+            <h4>Analyze</h4>
+            <img src="/public/images/icons/company.png" alt="Company">
+            <p>Explore funding patterns across NYC.</p>
+        </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <h3 class="heading">By the Numbers</h3>
+    <div class="content">
+        <div class="item">
+            <span>12,500+</span>
+            <p>Capital Projects</p>
+        </div>
+        <div class="item">
+            <span>$25B+</span>
+            <p>Total Funding</p>
+        </div>
+        <div class="item">
+            <span>20+</span>
+            <p>Categories</p>
+        </div>
+    </div>
+    
+  </section>
+
+  <section class="community">
+    <h3 class="heading">Community Voices</h3>
+    <div class="content">
+        <div class="item">
+            <p>“Great to see investment in local parks!”</p>
+            <p><strong>— Sarah L.</strong></p>
+        </div>
+        <div class="item">
+            <p>“Wish there was more funding for road repairs.”</p>
+            <p><strong>— Lucas M.</strong></p>
+        </div>
+        <div class="item">
+            <p>“Excellent transparency in the project details.”</p>
+            <p><strong>— Emma T.</strong></p>
+        </div>
+    </div>
+    
+  </section>
+
+  <section class="cta">
+    <h3 class="heading">Ready to get started?</h3>
+    <a href="/login" class="btn">Start Exploring</a>
+  </section>
+
 </body>
-
 </html>
