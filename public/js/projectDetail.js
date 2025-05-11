@@ -2,12 +2,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const feedbackForm = document.querySelector(".feedback-form form");
   const feedbackText = document.querySelector("textarea[name='feedbackText']");
   const feedbackList = document.querySelector(".feedback-list");
+  const errorMsg = document.getElementById("error");
 
+
+  // Submit event for double-checking
   if (feedbackForm) {
     feedbackForm.addEventListener("submit", function (e) {
-      if (feedbackText.value.trim() === "") {
+      const text = feedbackText.value.trim();
+
+      // Check again on submit
+      if (text.length < 5) {
         e.preventDefault();
-        alert("Feedback cannot be empty.");
+        errorMsg.textContent = "Feedback must be at least 5 characters.";
+        errorMsg.hidden = false;
         return;
       }
 
@@ -18,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Optional: Scroll to latest feedback if form was submitted successfully
+  // Scroll if feedback was submitted
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get("submitted") === "true") {
     feedbackList.scrollIntoView({ behavior: "smooth" });

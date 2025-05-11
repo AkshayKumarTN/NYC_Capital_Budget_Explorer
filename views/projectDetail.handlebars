@@ -29,8 +29,9 @@
 
       <div class="feedback-form">
         <h2>Leave Feedback</h2>
+        <p id="error" class="errorMessage" hidden></p>
         <form  action="feedback/{{project.id}}" method="POST">
-          <textarea name="feedbackText" rows="4" cols="50" required
+          <textarea name="feedbackText" rows="4" cols="50"
             placeholder="Enter your feedback..."></textarea><br />
           <button type="submit">Submit Feedback</button>
         </form>
@@ -47,6 +48,7 @@
       {{>footer}}
     </div>
   </main>
+  <script src="/public/js/projectDetail.js"></script>
 </body>
 
 </html>

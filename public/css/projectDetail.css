@@ -163,3 +163,10 @@ button[type="submit"]:hover {
 }
 
 
+.errorMessage {
+  font-size: 1.1rem !important;
+  line-height: 1.6;
+  color: red;
+  font-weight: bold;
+  padding: 10px;
+}
