@@ -9,20 +9,29 @@
   <link rel="stylesheet" href="/public/css/profile.css" />
 </head>
 <body>
+  <header>
+      <a href="/" class="nav-link"><h1>NYC Capital Budget Explorer</h1></a>
+      
+      {{#if errorMessage}}
+        <section id="error-message">
+            <p>{{errorMessage}}</p>
+        </section>
+      {{/if}}
 
-  <nav class="nav">
-    <a href="/projects" class="nav-link">Projects</a>
-    <form action="/logout" method="POST">
-        <button type="submit">Sign Out</button>
-    </form>
-  </nav>
+      <nav>
+        <a href="/projects" class="nav-link">Projects</a>
+        <form action="/logout" method="POST">
+            <button type="submit">Sign Out</button>
+        </form>
+      </nav>
+  </header>
 
   <main>
     <div class="card">
       <div class="avatar">
         <span class="material-icons">person</span>
       </div>
-      <h1>User Profile</h1>
+      <h2>User Profile</h2>
 
       <form id="profileForm" action="/profile" method="POST" novalidate>
 
