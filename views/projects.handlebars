@@ -87,15 +87,17 @@ This handlebar file will be rendered when the following route is hit: GET http:/
                 <tbody>
                   {{#each projects}}
                   <tr>
-                    <td>{{this.id}}</td>
-                    <td><a href="/projects/{{this.id}}">{{this.title}}</a></td>
-                    <td>{{this.description}}</td>
-                    <td>{{this.borough_full}}</td>
-                    <td>{{this.award_formatted}}</td>
-                    <td>{{this.sponsor}}</td>
-                    <td>{{this.fiscal_year}}</td>
-                    <td>{{this.council_district}}</td>
-                    <td>
+                    <td title="{{this.id}}">{{this.id}}</td>
+                    <td title="{{this.title}}">
+                      <a href="/projects/{{this.id}}" title="{{this.title}}">{{this.title}}</a>
+                    </td>
+                    <td title="{{this.description}}">{{this.description}}</td>
+                    <td title="{{this.borough_full}}">{{this.borough_full}}</td>
+                    <td title="{{this.award_formatted}}">{{this.award_formatted}}</td>
+                    <td title="{{this.sponsor}}">{{this.sponsor}}</td>
+                    <td title="{{this.fiscal_year}}">{{this.fiscal_year}}</td>
+                    <td title="{{this.council_district}}">{{this.council_district}}</td>
+                    <td title="{{#if this.neighborhoods}}{{this.neighborhoods}}{{else}}N/A{{/if}}">
                       {{#if this.neighborhoods}}
                       {{this.neighborhoods}}
                       {{else}}
@@ -106,10 +108,7 @@ This handlebar file will be rendered when the following route is hit: GET http:/
                   {{/each}}
                 </tbody>
               </table>
-
-
             </div>
-          </div>
           <div class="pagination-controls">
             {{#if totalPages}}
             {{#each (range 1 totalPages)}}
@@ -124,6 +123,7 @@ This handlebar file will be rendered when the following route is hit: GET http:/
             </a>
             {{/each}}
             {{/if}}
+          </div>
           </div>
         </div>
 
