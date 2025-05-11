@@ -27,7 +27,7 @@ header {
 /* Navigation Bar */
 
 .nav {
-  background-color: #2b69f7;
+  background-color: #fff;
   position: absolute;
   font-family: "Arial", sans-serif;
   top: 0;
@@ -37,6 +37,8 @@ header {
   align-items: center;
   justify-content: flex-end;
   padding: 25px;
+  border-bottom: 5px;
+  border-color: black;
 }
 
 nav ul {
@@ -48,8 +50,14 @@ nav ul {
   padding: 0;
 }
 
+.signout {
+    all: unset;
+    font-weight: bold;
+    color: #0F66A6;
+}
+
 nav ul li a {
-  color: white;
+  color: #0F66A6;
   font-weight: Bold;
   text-decoration: none;
   padding: 10px 15px;
@@ -59,7 +67,7 @@ nav ul li a {
   justify-content: center;
 }
 
-nav ul li a:hover {
+nav ul li a:hover, .signout:hover {
   color: white;
   background-color: #333;
   border-radius: 5px;
