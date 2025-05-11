@@ -39,18 +39,18 @@
       <div class="feedback-list">
         <h3>Latest Feedback</h3>
         {{#if feedbacks.length}}
-          <ul>
-            {{#each feedbacks}}
-              <li>{{this.text}} <small>({{this.created_at}})</small></li>
-            {{/each}}
-          </ul>
-          {{#if (gt totalFeedbacks 10)}}
-            <div id="load-more-container">
-              <button id="load-more-btn">Load More ↓</button>
-            </div>
-          {{/if}}
+        <ul>
+          {{#each feedbacks}}
+          <li><strong>{{this.user}}:</strong> {{this.text}} <small>({{this.created_at}})</small></li>
+          {{/each}}
+        </ul>
+        {{#if (gt totalFeedbacks 10)}}
+        <div id="load-more-container">
+          <button id="load-more-btn">Load More ↓</button>
+        </div>
+        {{/if}}
         {{else}}
-          <p>No feedback available for this project yet. Be the first to leave your thoughts!</p>
+        <p>No feedback available for this project yet. Be the first to leave your thoughts!</p>
         {{/if}}
       </div>
       {{>footer}}

@@ -107,14 +107,16 @@ export const getProjectById = async (id) => {
   return project;
 };
 
-export const saveFeedback = async (projectId, text) => {
+export const saveFeedback = async (projectId, text, userFullName) => {
   if (!projectId || typeof projectId !== 'string') throw 'Error: Invalid project ID';
   if (!text || typeof text !== 'string' || text.trim().length === 0) throw 'Error: Feedback text is required';
+  if (!userFullName || typeof userFullName !== 'string') throw 'Error: Invalid username';
 
   const feedbacksCollection = await feedbacks(); // assuming you have a `feedbacks()` collection helper
   const feedbackDoc = {
     project_id: projectId.trim(),
     text: text.trim(),
+    user: userFullName.trim(),
     created_at: new Date()
   };
 
@@ -142,6 +144,7 @@ export const getLatestFeedbacks = async (projectId, limit = 10) => {
 
   return feedbackList.map(fb => ({
     text: fb.text,
+    user: fb.user || 'Anonymous',
     created_at: fb.created_at.toLocaleString()
   }));
 };
