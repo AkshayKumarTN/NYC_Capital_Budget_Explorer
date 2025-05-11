@@ -367,7 +367,7 @@ a:hover {
 /* This enables vertical scrolling */
 .table-scroll-container {
   min-height: 800px;
-  max-height: 1000px;
+  max-height: 1500px;
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 4px;

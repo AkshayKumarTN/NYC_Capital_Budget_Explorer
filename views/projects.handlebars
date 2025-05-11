@@ -108,24 +108,25 @@ This handlebar file will be rendered when the following route is hit: GET http:/
                   {{/each}}
                 </tbody>
               </table>
-              <div class="pagination-controls">
-                {{#if totalPages}}
-                {{#each (range 1 totalPages)}}
-                <a href="/projects?page={{this}}
-                          {{#if ../selected.borough}}&borough={{../selected.borough}}{{/if}}
-                          {{#if ../selected.fy}}&fy={{../selected.fy}}{{/if}}
-                          {{#if ../selected.district}}&district={{../selected.district}}{{/if}}
-                          {{#if ../selected.neighborhood}}&neighborhood={{../selected.neighborhood}}{{/if}}
-                          {{#if ../selected.sponsor}}&sponsor={{../selected.sponsor}}{{/if}}"
-                  class="page-link {{#if (eq ../currentPage this)}}active{{/if}}">
-                  {{this}}
-                </a>
-                {{/each}}
-                {{/if}}
-              </div>
+              
 
               </div>
             </div>
+          </div>
+          <div class="pagination-controls">
+            {{#if totalPages}}
+            {{#each (range 1 totalPages)}}
+            <a href="/projects?page={{this}}
+                                    {{#if ../selected.borough}}&borough={{../selected.borough}}{{/if}}
+                                    {{#if ../selected.fy}}&fy={{../selected.fy}}{{/if}}
+                                    {{#if ../selected.district}}&district={{../selected.district}}{{/if}}
+                                    {{#if ../selected.neighborhood}}&neighborhood={{../selected.neighborhood}}{{/if}}
+                                    {{#if ../selected.sponsor}}&sponsor={{../selected.sponsor}}{{/if}}"
+              class="page-link {{#if (eq ../currentPage this)}}active{{/if}}">
+              {{this}}
+            </a>
+            {{/each}}
+            {{/if}}
           </div>
 
             <div id="pieTab" class="tab-content" style="display: none;">
