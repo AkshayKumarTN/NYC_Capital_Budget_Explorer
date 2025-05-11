@@ -1,11 +1,22 @@
 import {
   getValidatedUserInfo,
   getValidatedUserCredentials,
+  isValidEmail,
 } from "../utils/authHelpers.js";
-import { throwError, validateAndReturnString } from "../utils/helpers.js";
+import {
+  throwError,
+  validateAndReturnString,
+  sendVerificationEmail,
+} from "../utils/helpers.js";
 import { users } from "../config/mongoCollections.js";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import { ObjectId } from "mongodb";
+
+function getCurrentDateTime() {
+  const now = new Date();
+  return now.toISOString().replace(/\.\d{3}Z$/, "");
+}
 
 async function getUserByEmail(email) {
   const userCollection = await users();
@@ -78,8 +89,7 @@ async function createUser(userData) {
   //hash the password
   const hashedPassword = getHashedPassword(password);
 
-  const now = new Date();
-  const createdAt = now.toISOString().replace(/\.\d{3}Z$/, "");
+  const createdAt = getCurrentDateTime();
   const updatedAt = createdAt;
 
   const newUser = {
@@ -110,4 +120,87 @@ async function createUser(userData) {
   };
 }
 
-export { userLogin, createUser };
+async function validEmailAndSendVerification(email) {
+  email = validateAndReturnString(email, "Email");
+
+  if (!isValidEmail(email)) throwError("Enter valid email ID!!");
+
+  const user = await getUserByEmail(email);
+  if (!user) throwError("User does not exist!!");
+
+  const code = crypto.randomInt(100_000, 999_999).toString();
+  const codeHash = bcrypt.hashSync(code, 10);
+
+  const expiresAt = Date.now() + 15 * 60 * 1000; // 15 min
+
+  const userCollection = await users();
+
+  const updateInfo = await userCollection.updateOne(
+    { _id: user._id },
+    {
+      $set: {
+        resetCodeHash: codeHash,
+        resetCodeExpiry: expiresAt,
+      },
+    }
+  );
+
+  if (!updateInfo.modifiedCount) throwError("Some Error Occurred !!!");
+
+  const result = await sendVerificationEmail(email, code);
+
+  console.log("Emailing result : ", result);
+
+  return {
+    isVerificationSent: true,
+    _id: user._id.toString(),
+  };
+}
+
+export async function verifyResetAndUpdatePassword(email, code, newPassword) {
+  ({ email, password: newPassword } = getValidatedUserCredentials(
+    email,
+    newPassword
+  ));
+
+  const user = await getUserByEmail(email);
+  if (!user) throwError("User does not exist!!");
+
+  const passwordMatch = await bcrypt.compare(newPassword, user.hashPassword);
+
+  if (passwordMatch) throwError("Cannot reuse the old password for new password!!");
+
+  if (!user.resetCodeHash || !user.resetCodeExpiry)
+    throwError("No reset initiated for this user!!");
+
+  if (Date.now() > user.resetCodeExpiry)
+    throwError("Verification code expired!!");
+
+  const doCodesMatch = await bcrypt.compare(code, user.resetCodeHash);
+  if (!doCodesMatch) throwError("Invalid verification code provided!!");
+
+  //hash the password
+  const hashedPassword = getHashedPassword(newPassword);
+
+  //Updating the updatedAt field for the user
+  const updatedAt = getCurrentDateTime();
+
+  const userCollection = await users();
+
+  const updateInfo = await userCollection.updateOne(
+    { _id: user._id },
+    {
+      $set: { hashPassword: hashedPassword, updatedAt },
+      $unset: { resetCodeHash: "", resetCodeExpiry: "" },
+    }
+  );
+  
+  if (!updateInfo.modifiedCount) throwError("Some Error Occurred !!!");
+
+  return {
+    isPasswordUpdated: true,
+    _id: user._id.toString(),
+  };
+}
+
+export { userLogin, createUser, validEmailAndSendVerification };

@@ -18,7 +18,7 @@ router
   .get("/", authRedirect, (req, res) => {
     res.render("login");
   })
-  .post("/", async (req, res) => {
+  .post("/", authRedirect, async (req, res) => {
     let loginData = req.body;
     console.log("Login data: ", loginData);
 
