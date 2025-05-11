@@ -32,6 +32,9 @@ app.engine('handlebars', engine({
         rangeArray.push(i);
       }
       return rangeArray;
+    },
+    gt: function (a, b) {
+      return a > b;
     }
   }
 }));

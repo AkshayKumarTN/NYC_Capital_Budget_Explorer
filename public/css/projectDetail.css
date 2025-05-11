@@ -137,9 +137,10 @@ button[type="submit"]:hover {
 }
 
 .feedback-list {
-  margin-top: 2rem;
-  padding-top: 1rem;
+  margin: 2rem 0rem;
+  padding: 1rem 0rem;
   border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .feedback-list ul {
@@ -169,4 +170,43 @@ button[type="submit"]:hover {
   color: red;
   font-weight: bold;
   padding: 10px;
+}
+
+#load-more-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+#load-more-btn {
+  background-color: white;
+  color: #0055a5;  /* Blue text */
+  border: 2px solid #0055a5;  /* Blue border */
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+#load-more-btn:hover {
+  background-color: #0055a5;  /* Blue background on hover */
+  color: white;  /* White text on hover */
+  transform: scale(1.1);
+}
+
+#load-more-btn:focus {
+  outline: none;
+}
+
+#load-more-btn:disabled {
+  background-color: #f0f0f0;  /* Light gray background */
+  color: #cccccc;  /* Gray text */
+  border: 2px solid #cccccc;  /* Gray border */
+  cursor: not-allowed;
+}
+
+#load-more-btn:disabled:hover {
+  background-color: #f0f0f0;
+  color: #cccccc;
+  border: 2px solid #cccccc;
 }
