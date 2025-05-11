@@ -15,8 +15,6 @@
             <p>{{errorMessage}}</p>
         </section>
       {{/if}}
-      
-      <section class="phone"><img src="/public/images/phone-icon.png" alt="Phone Icon" /> 1-855-326-8523</section>
   </header>
 
   <main>
@@ -48,16 +46,19 @@
             <span class="error" id="cnfPassword-error"></span>
         </section>
         <section class="group">
-            <select name="city" id="city" required>
-                <option>City</option>
-                <option value="X">Bronx</option>
-                <option value="K">Brooklyn</option>
+            <select name="borough" id="borough" required>
+                <option value="Unknown">Select Borough</option>
+                <option value="Manhattan">Manhattan</option>
+                <option value="Bronx">Bronx</option>
+                <option value="Brooklyn">Brooklyn</option>
+                <option value="Queens">Queens</option>
+                <option value="Staten Island">Staten Island</option>
             </select>
-            <span class="error" id="city-error"></span>
+            <span class="error" id="borough-error"></span>
         </section>
         <section class="group">
             <select name="gender" id="gender" required>
-                <option>Gender</option>
+                <option value="Unknown">Select Gender</option>
                 <option value="M">Male</option>
                 <option value="F">Female</option>
                 <option value="O">Other</option>

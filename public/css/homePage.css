@@ -12,24 +12,30 @@ body {
   }
 
   nav h1 {
-    color: #fff;
+    color: #0F66A6;
     margin-left: 2rem;
     font-size: 2rem;
   }
 
   nav {
-    background: #002c5f;
+    background: #fff;
     height: 5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  nav a {
-    color: #fff;
+
+  nav button {
+    all: unset;
+  }
+
+  nav a, nav button {
+    color: #0F66A6;
     text-decoration: none;
     margin-right: 3rem;
     font-weight: bold;
+    cursor: pointer;
   }
 
   header {

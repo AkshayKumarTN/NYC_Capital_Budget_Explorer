@@ -7,7 +7,7 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
   const confirmPassword = document.getElementById("confirmPassword").value;
-  const city = document.getElementById("city").value;
+  const borough = document.getElementById("borough").value;
   const gender = document.getElementById("gender").value;
   const ageVal = document.getElementById("age").value;
 
@@ -16,7 +16,7 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
   const emailError = document.getElementById("email-error");
   const passError = document.getElementById("password-error");
   const cnfError = document.getElementById("cnfPassword-error");
-  const cityError = document.getElementById("city-error");
+  const boroughError = document.getElementById("borough-error");
   const genderError = document.getElementById("gender-error");
   const ageError = document.getElementById("age-error");
 
@@ -26,7 +26,7 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
     emailError,
     passError,
     cnfError,
-    cityError,
+    boroughError,
     genderError,
     ageError,
   ].forEach((span) => (span.textContent = ""));
@@ -91,14 +91,14 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
     valid = false;
   }
 
-  if (city === "City") {
-    cityError.textContent = "Select a city";
-    cityError.style.display = "block"
+  if (borough === "Unknown") {
+    boroughError.textContent = "Select a Borough";
+    boroughError.style.display = "block"
     valid = false;
   }
 
-  if (gender === "Gender") {
-    genderError.textContent = "Select a gender";
+  if (gender === "Unknown") {
+    genderError.textContent = "Select a Gender";
     genderError.style.display = "block";
     valid = false;
   }
