@@ -101,10 +101,42 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("noBarDataMessage").style.display = data.length
         ? "none"
         : "block";
+
+      const legendBody = document.querySelector("#legendTable tbody");
+    legendBody.innerHTML = ""; // clear previous
+
+    data.forEach((d) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${d.label}</td>
+        <td>${d.description}</td>
+        <td>$${Number(d.value).toLocaleString()}</td>
+        <td>${d.borough}</td>
+        <td>${d.fiscal_year}</td>
+      `;
+      legendBody.appendChild(row);
+    });
+
+
+    let amountSortAsc = true;
+    document.getElementById("amountHeader").addEventListener("click", () => {
+      const tbody = document.querySelector("#legendTable tbody");
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      rows.sort((a, b) => {
+        const aVal = parseFloat(a.children[2].textContent.replace(/[$,]/g, ""));
+        const bVal = parseFloat(b.children[2].textContent.replace(/[$,]/g, ""));
+        return amountSortAsc ? aVal - bVal : bVal - aVal;
+      });
+      document.getElementById("amountHeader").textContent = `Amount ${amountSortAsc ? '▼' : '▲'}`;
+      rows.forEach(row => tbody.appendChild(row));
+      amountSortAsc = !amountSortAsc;
+    });
     } catch (error) {
       console.error("Error loading bar chart:", error);
       alert("Could not load chart data. Please try again.");
     }
+
+    
   }
 
   // ************* END OF NEW BAR CHART WITH A BAR CHART ROUTE *************
@@ -207,10 +239,23 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         errorSpan.style.display = "none";
       }
-
-      loadBarChart({ startYear_filter, endYear_filter, borough, district });
+      loadBarChart({ startYear: startYear_filter, endYear:endYear_filter, borough, district });
     });
 
+      // Reset filters and reload full chart
+      document.getElementById('resetBarFilters').addEventListener('click', () => {
+        document.getElementById('yearRangeStart').value = startYear;
+        document.getElementById('yearRangeEnd').value = endYear;
+        document.getElementById('yearRangeDisplay').innerText = `FY${startYear} - FY${endYear}`;
+        document.getElementById('filterBorough').value = '';
+        document.getElementById('filterDistrict').value = '';
+        loadBarChart(); // reload full chart
+      });
+
+      // Download chart as image
+      downloadBarChart(); 
+      
+    }
     // Reset filters and reload full chart
     document.getElementById("resetBarFilters").addEventListener("click", () => {
       document.getElementById("yearRangeStart").value = startYear;
@@ -222,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("filterDistrict").value = "";
       loadBarChart(); // reload full chart
     });
-  }
+  
 
   //******** YEAR RANGE FILTER ******************/
   function updateYearRangeLabel() {

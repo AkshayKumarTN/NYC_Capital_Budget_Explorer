@@ -367,7 +367,7 @@ a:hover {
 /* This enables vertical scrolling */
 .table-scroll-container {
   min-height: 800px;
-  max-height: 1000px;
+  max-height: 1500px;
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 4px;
@@ -501,4 +501,48 @@ a:hover {
   margin-bottom: 20px;
   padding-top: 80px;
   padding-left: 20px;
+}
+
+#chartExportContainer {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+  display: block;
+}
+
+#chartExportContainer canvas {
+  max-width: 800px;
+}
+
+#legendTable {
+  margin: 20px auto;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+}
+
+#legendTable th,
+#legendTable td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+#legendTable th {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+
+#barChartCanvas {
+  page-break-after: always;
+}
+
+.export-mode.exporting {
+  max-height: none !important;
+  overflow: visible !important;
 }

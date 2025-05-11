@@ -108,24 +108,25 @@ This handlebar file will be rendered when the following route is hit: GET http:/
                   {{/each}}
                 </tbody>
               </table>
-              <div class="pagination-controls">
-                {{#if totalPages}}
-                {{#each (range 1 totalPages)}}
-                <a href="/projects?page={{this}}
-                          {{#if ../selected.borough}}&borough={{../selected.borough}}{{/if}}
-                          {{#if ../selected.fy}}&fy={{../selected.fy}}{{/if}}
-                          {{#if ../selected.district}}&district={{../selected.district}}{{/if}}
-                          {{#if ../selected.neighborhood}}&neighborhood={{../selected.neighborhood}}{{/if}}
-                          {{#if ../selected.sponsor}}&sponsor={{../selected.sponsor}}{{/if}}"
-                  class="page-link {{#if (eq ../currentPage this)}}active{{/if}}">
-                  {{this}}
-                </a>
-                {{/each}}
-                {{/if}}
-              </div>
+              
 
               </div>
             </div>
+          </div>
+          <div class="pagination-controls">
+            {{#if totalPages}}
+            {{#each (range 1 totalPages)}}
+            <a href="/projects?page={{this}}
+                                    {{#if ../selected.borough}}&borough={{../selected.borough}}{{/if}}
+                                    {{#if ../selected.fy}}&fy={{../selected.fy}}{{/if}}
+                                    {{#if ../selected.district}}&district={{../selected.district}}{{/if}}
+                                    {{#if ../selected.neighborhood}}&neighborhood={{../selected.neighborhood}}{{/if}}
+                                    {{#if ../selected.sponsor}}&sponsor={{../selected.sponsor}}{{/if}}"
+              class="page-link {{#if (eq ../currentPage this)}}active{{/if}}">
+              {{this}}
+            </a>
+            {{/each}}
+            {{/if}}
           </div>
 
             <div id="pieTab" class="tab-content" style="display: none;">
@@ -208,10 +209,24 @@ This handlebar file will be rendered when the following route is hit: GET http:/
             
                 <button id="applyBarFilters" class="primary-button">Apply</button>
                 <button id="resetBarFilters" class="secondary-button">Clear</button>
-
+                <button id="downloadBarChart"  class="secondary-button" >Download Chart</button>
               </div>
             
-              <canvas id="barChartCanvas" width="1000" height="1000"></canvas>
+              <div id="chartExportContainer" class="export-mode">
+                <canvas id="barChartCanvas"></canvas>
+                <table id="legendTable">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Description</th>
+                      <th id="amountHeader">Amount ▲</th>
+                      <th>Borough</th>
+                      <th>Fiscal Year</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
               <p id="noBarDataMessage" style="display: none; text-align: center;">
                 No data available for the selected filters.
               </p>
@@ -225,6 +240,9 @@ This handlebar file will be rendered when the following route is hit: GET http:/
     </main>
     <script src="/public/js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/public/js/downloadBarChart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   </body>
 
 </html>
