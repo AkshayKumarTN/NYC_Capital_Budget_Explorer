@@ -152,10 +152,7 @@ export const getLatestFeedbacks = async (projectId, limit = 10) => {
 export const getFeedbackCount = async (projectId) => {
   if (!projectId || typeof projectId !== 'string') throw 'Error: Invalid project ID';
   const feedbacksCollection = await feedbacks();
-
-  const count = await feedbacksCollection
-    .find({ project_id: projectId.trim() })
-    .count();
+  const count = await feedbacksCollection.countDocuments({ project_id: projectId.trim() });
 
   return count;
 };
