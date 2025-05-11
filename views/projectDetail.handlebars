@@ -29,24 +29,34 @@
 
       <div class="feedback-form">
         <h2>Leave Feedback</h2>
-        <form  action="/feedback/{{project.id}}" method="POST">
-          <textarea name="feedbackText" rows="4" cols="50" required
-            placeholder="Enter your feedback..."></textarea><br />
+        <p id="error" class="errorMessage" hidden></p>
+        <form action="feedback/{{project.id}}" method="POST">
+          <textarea name="feedbackText" rows="4" cols="50" placeholder="Enter your feedback..."></textarea><br />
           <button type="submit">Submit Feedback</button>
         </form>
       </div>
 
       <div class="feedback-list">
         <h3>Latest Feedback</h3>
-        <ul>
-          {{#each feedbacks}}
-          <li>{{this.text}} <small>({{this.created_at}})</small></li>
-          {{/each}}
-        </ul>
+        {{#if feedbacks.length}}
+          <ul>
+            {{#each feedbacks}}
+              <li>{{this.text}} <small>({{this.created_at}})</small></li>
+            {{/each}}
+          </ul>
+          {{#if (gt totalFeedbacks 10)}}
+            <div id="load-more-container">
+              <button id="load-more-btn">Load More ↓</button>
+            </div>
+          {{/if}}
+        {{else}}
+          <p>No feedback available for this project yet. Be the first to leave your thoughts!</p>
+        {{/if}}
       </div>
       {{>footer}}
     </div>
   </main>
+  <script src="/public/js/projectDetail.js"></script>
 </body>
 
 </html>
