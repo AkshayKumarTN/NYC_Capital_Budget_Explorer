@@ -32,11 +32,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 const response = await fetch(`/projects/${projectId}/all-feedbacks`);
                 const feedbacks = await response.json();
                 feedbackList.innerHTML = ""; // Clear current list
+
                 feedbacks.forEach(fb => {
                     const li = document.createElement("li");
-                    li.innerHTML = `${fb.text} <small>(${new Date(fb.created_at).toLocaleString()})</small>`;
+                    const author = fb.user ? `${fb.user}` : "Anonymous";
+                    li.innerHTML = `<strong>${author}</strong>: ${fb.text} <small>(${new Date(fb.created_at).toLocaleString()})</small>`;
                     feedbackList.appendChild(li);
                 });
+
                 loadMoreBtn.remove(); // Remove the Load More button
             } catch (err) {
                 console.error("Failed to load more feedbacks:", err);

@@ -149,6 +149,11 @@ button[type="submit"]:hover {
 }
 
 .feedback-list li {
+  list-style-type: none;  /* Removes bullet points */
+  padding-left: 0;        /* Removes left indentation */
+}
+
+.feedback-list li {
   background-color: #f1f4f9;
   margin: 0.5rem 0;
   padding: 0.8rem;
