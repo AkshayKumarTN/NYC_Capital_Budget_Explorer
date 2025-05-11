@@ -17,3 +17,4 @@ const getCollectionFn = (collection) => {
 /* Now, you can list your collections here: */
 export const projects = getCollectionFn('projects');
 export const users = getCollectionFn('users');
+export const feedbacks = getCollectionFn('feedbacks');

@@ -29,7 +29,7 @@
 
       <div class="feedback-form">
         <h2>Leave Feedback</h2>
-        <form action="/projects/{{project.id}}/feedback" method="POST">
+        <form  action="/feedback/{{project.id}}" method="POST">
           <textarea name="feedbackText" rows="4" cols="50" required
             placeholder="Enter your feedback..."></textarea><br />
           <button type="submit">Submit Feedback</button>

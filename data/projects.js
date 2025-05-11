@@ -1,4 +1,4 @@
-import { projects } from "../config/mongoCollections.js";
+import { projects, feedbacks } from "../config/mongoCollections.js";
 
 
 export const getAllProjects = async () => {
@@ -106,6 +106,42 @@ export const getProjectById = async (id) => {
   return project;
 };
 
+export const saveFeedback = async (projectId, text) => {
+  if (!projectId || typeof projectId !== 'string') throw 'Error: Invalid project ID';
+  if (!text || typeof text !== 'string' || text.trim().length === 0) throw 'Error: Feedback text is required';
+
+  const feedbacksCollection = await feedbacks(); // assuming you have a `feedbacks()` collection helper
+  const feedbackDoc = {
+    project_id: projectId.trim(),
+    text: text.trim(),
+    created_at: new Date()
+  };
+
+  const insertResult = await feedbacksCollection.insertOne(feedbackDoc);
+  if (!insertResult.acknowledged || !insertResult.insertedId) throw 'Error: Could not save feedback';
+
+  return insertResult.insertedId.toString();
+};
+
+export const getLatestFeedbacks = async (projectId, limit = 10) => {
+  if (!projectId || typeof projectId !== 'string') throw 'Error: Invalid project ID';
+  const feedbacksCollection = await feedbacks();
+
+  const feedbackList = await feedbacksCollection
+    .find({ project_id: projectId.trim() })
+    .sort({ created_at: -1 })
+    .limit(limit)
+    .toArray();
+
+  if(feedbackList.length == 0 ){
+    return null;
+  }
+
+  return feedbackList.map(fb => ({
+    text: fb.text,
+    created_at: fb.created_at.toLocaleString()
+  }));
+};
 
 export const getFiscalYearRange = async () => {
   const collection = await projects();
