@@ -91,10 +91,22 @@ router.get("/:id", async (req, res) => {
   try {
     const project = await ProjectsMethods.getProjectById(projectId);
     const feedbacks = await ProjectsMethods.getLatestFeedbacks(projectId, 10);
-    res.render('projectDetail', { project, feedbacks });
+    const totalFeedbacks = await ProjectsMethods.getFeedbackCount(projectId);
+    res.render('projectDetail', { project, feedbacks, totalFeedbacks });
   } catch (err) {
     console.error('Error fetching project or feedback:', err);
     res.status(500).send('Internal Server Error');
+  }
+});
+
+router.get('/:id/all-feedbacks', async (req, res) => {
+  const projectId = req.params.id;
+  try {
+    const allFeedbacks = await ProjectsMethods.getLatestFeedbacks(projectId, null);
+    res.json(allFeedbacks);
+  } catch (err) {
+    console.error('Error fetching all feedbacks:', err);
+    res.status(500).json({ error: 'Failed to fetch feedbacks' });
   }
 });
 

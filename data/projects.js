@@ -128,13 +128,15 @@ export const getLatestFeedbacks = async (projectId, limit = 10) => {
   if (!projectId || typeof projectId !== 'string') throw 'Error: Invalid project ID';
   const feedbacksCollection = await feedbacks();
 
-  const feedbackList = await feedbacksCollection
-    .find({ project_id: projectId.trim() })
-    .sort({ created_at: -1 })
-    .limit(limit)
-    .toArray();
+  let query = feedbacksCollection.find({ project_id: projectId.trim() }).sort({ created_at: -1 });
 
-  if(feedbackList.length == 0 ){
+  if (typeof limit === 'number') {
+    query = query.limit(limit);
+  }
+
+  const feedbackList = await query.toArray();
+
+  if (feedbackList.length === 0) {
     return null;
   }
 
@@ -143,6 +145,18 @@ export const getLatestFeedbacks = async (projectId, limit = 10) => {
     created_at: fb.created_at.toLocaleString()
   }));
 };
+
+export const getFeedbackCount = async (projectId) => {
+  if (!projectId || typeof projectId !== 'string') throw 'Error: Invalid project ID';
+  const feedbacksCollection = await feedbacks();
+
+  const count = await feedbacksCollection
+    .find({ project_id: projectId.trim() })
+    .count();
+
+  return count;
+};
+
 
 export const getFiscalYearRange = async () => {
   const collection = await projects();
