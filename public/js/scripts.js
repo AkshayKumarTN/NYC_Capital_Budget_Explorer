@@ -92,10 +92,42 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("noBarDataMessage").style.display = data.length
         ? "none"
         : "block";
+
+      const legendBody = document.querySelector("#legendTable tbody");
+    legendBody.innerHTML = ""; // clear previous
+
+    data.forEach((d) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${d.label}</td>
+        <td>${d.description}</td>
+        <td>$${Number(d.value).toLocaleString()}</td>
+        <td>${d.borough}</td>
+        <td>${d.fiscal_year}</td>
+      `;
+      legendBody.appendChild(row);
+    });
+
+
+    let amountSortAsc = true;
+    document.getElementById("amountHeader").addEventListener("click", () => {
+      const tbody = document.querySelector("#legendTable tbody");
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      rows.sort((a, b) => {
+        const aVal = parseFloat(a.children[2].textContent.replace(/[$,]/g, ""));
+        const bVal = parseFloat(b.children[2].textContent.replace(/[$,]/g, ""));
+        return amountSortAsc ? aVal - bVal : bVal - aVal;
+      });
+      document.getElementById("amountHeader").textContent = `Amount ${amountSortAsc ? '▼' : '▲'}`;
+      rows.forEach(row => tbody.appendChild(row));
+      amountSortAsc = !amountSortAsc;
+    });
     } catch (error) {
       console.error("Error loading bar chart:", error);
       alert("Could not load chart data. Please try again.");
     }
+
+    
   }
 
   // ************* END OF NEW BAR CHART WITH A BAR CHART ROUTE *************
@@ -204,27 +236,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Download chart as image
-      document.getElementById('downloadBarChart').addEventListener('click', () => {
-        const canvas = document.getElementById('barChartCanvas');
-
-        const chart = window.barChartInstance; // Get chart instance
-        const legendContainer = document.getElementById('barChartLegend');
-        legendContainer.innerHTML = '<h3>Legend</h3>';
-
-        chart.data.labels.forEach((label, index) => {
-          const amount = chart.data.datasets[0].data[index];
-          // Optional: Extend with project title/category if available
-          const extraInfo = chart.data.datasets[0].projectInfo?.[label] || ''; 
-          const div = document.createElement('div');
-          div.innerHTML = `<strong>${label}</strong>: $${amount.toLocaleString()} ${extraInfo}`;
-          legendContainer.appendChild(div);
-        });
-
-        const link = document.createElement('a');
-        link.download = 'bar_chart.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      });
+      downloadBarChart(); 
+      
     }
     // Reset filters and reload full chart
     document.getElementById("resetBarFilters").addEventListener("click", () => {

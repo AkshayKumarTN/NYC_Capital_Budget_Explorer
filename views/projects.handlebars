@@ -213,11 +213,21 @@ This handlebar file will be rendered when the following route is hit: GET http:/
                 <button id="downloadBarChart"  class="secondary-button" >Download Chart</button>
               </div>
             
-              <canvas id="barChartCanvas" width="1000" height="1000"></canvas>
-              <div id="barChartLegend" class="print-only">
-                <!-- Legend entries will go here dynamically -->
+              <div id="chartExportContainer" class="export-mode">
+                <canvas id="barChartCanvas"></canvas>
+                <table id="legendTable">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Description</th>
+                      <th id="amountHeader">Amount ▲</th>
+                      <th>Borough</th>
+                      <th>Fiscal Year</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
               </div>
-
               <p id="noBarDataMessage" style="display: none; text-align: center;">
                 No data available for the selected filters.
               </p>
@@ -231,6 +241,9 @@ This handlebar file will be rendered when the following route is hit: GET http:/
     </main>
     <script src="/public/js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/public/js/downloadBarChart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   </body>
 
 </html>

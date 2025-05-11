@@ -457,15 +457,46 @@
     text-overflow: ellipsis;
   }
 
-.print-only {
-  display: none;
+
+#chartExportContainer {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+  display: block;
 }
 
-@media print {
-  .print-only {
-    display: block;
-    margin-top: 20px;
-    font-size: 14px;
-    font-family: sans-serif;
-  }
+#chartExportContainer canvas {
+  max-width: 800px;
+}
+#legendTable{
+  margin: 20px auto;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+}
+
+#legendTable th,
+#legendTable td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+#legendTable th {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+
+#barChartCanvas {
+  page-break-after: always;
+}
+
+.export-mode.exporting {
+  max-height: none !important;
+  overflow: visible !important;
 }
