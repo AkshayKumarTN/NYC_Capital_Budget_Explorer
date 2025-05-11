@@ -87,18 +87,31 @@ router.get("/byAwardRange", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const projectId = req.params.id;
-  const project = await ProjectsMethods.getProjectById(projectId);
-  // const feedbacks = await ProjectsMethods.getLatestFeedbacks(projectId, 10);
-  const feedbacks = null;
-  // return res.json(projectId);
-  res.render("projectDetail", { project, feedbacks });
+
+  try {
+    const project = await ProjectsMethods.getProjectById(projectId);
+    const feedbacks = await ProjectsMethods.getLatestFeedbacks(projectId, 10);
+    res.render('projectDetail', { project, feedbacks });
+  } catch (err) {
+    console.error('Error fetching project or feedback:', err);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
-router.post("/projects/:id/feedback", async (req, res) => {
+router.post('/feedback/:id', async (req, res) => {
   const projectId = req.params.id;
   const feedbackText = req.body.feedbackText;
 
-  // await saveFeedback(projectId, feedbackText);
+  if (!feedbackText || feedbackText.trim() === '') {
+    return res.status(400).send('Feedback cannot be empty.');
+  }
+
+  try {
+    await ProjectsMethods.saveFeedback(projectId, feedbackText);
+    res.redirect(`/projects/${projectId}`);
+  } catch (err) {
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 export default router;
