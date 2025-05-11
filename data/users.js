@@ -75,7 +75,7 @@ async function createUser(userData) {
     lastName,
     email,
     password,
-    city,
+    borough,
     state,
     gender,
     age,
@@ -97,7 +97,7 @@ async function createUser(userData) {
     lastName,
     email,
     hashPassword: hashedPassword,
-    city,
+    borough,
     state,
     gender,
     age,
@@ -113,7 +113,8 @@ async function createUser(userData) {
 
   const created = await getUserById(insertInfo.insertedId);
 
-  console.log("User Info: ", created);
+  delete created.hashPassword;
+  
   return {
     ...created,
     _id: created._id.toString(),
@@ -157,7 +158,7 @@ async function validEmailAndSendVerification(email) {
   };
 }
 
-export async function verifyResetAndUpdatePassword(email, code, newPassword) {
+async function verifyResetAndUpdatePassword(email, code, newPassword) {
   ({ email, password: newPassword } = getValidatedUserCredentials(
     email,
     newPassword
@@ -203,4 +204,60 @@ export async function verifyResetAndUpdatePassword(email, code, newPassword) {
   };
 }
 
-export { userLogin, createUser, validEmailAndSendVerification };
+async function updateUserDetails(userData, userEmail) {
+  userData = getValidatedUserInfo(userData, true);
+  let {
+    firstName,
+    lastName,
+    email,
+    password,
+    borough,
+    gender,
+    age,
+  } = userData;
+
+  if(email !== userEmail) throwError("Provided user is not the same user who logged in!!");
+
+  const userFound = await getUserByEmail(email);
+  if (!userFound) throwError("User doesn't exist");
+
+  //hash the password
+  let hashedPassword = undefined;
+  
+  if(password.length)
+    hashedPassword = getHashedPassword(password);
+
+  const updatedAt = getCurrentDateTime();
+
+  const newUserDetails = {
+    firstName,
+    lastName,
+    borough,
+    gender,
+    age,
+    updatedAt,
+  };
+
+  if(password.length) newUserDetails.hashPassword = hashedPassword;
+
+  const userCollection = await users();
+  const updateInfo = await userCollection.updateOne(
+    { _id: userFound._id },
+    {
+      $set: newUserDetails,
+    }
+  );
+  
+  if (!updateInfo.modifiedCount) throwError("Some Error Occurred !!!");
+
+  const result = {...userFound, ...newUserDetails};
+
+  delete result.hashPassword;
+
+  return {
+    ...result,
+    _id: result._id.toString(),
+  };
+}
+
+export { userLogin, createUser, validEmailAndSendVerification, verifyResetAndUpdatePassword, updateUserDetails };

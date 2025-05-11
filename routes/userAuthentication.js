@@ -54,7 +54,7 @@ router
       const userData = await userLogin(email, password);
 
       //Set the session
-      initSession(req, userData);
+      initSession(req, userData, loginData.remember);
       console.log("Session data: ", req.session);
 
       return res.redirect("/projects");
