@@ -97,6 +97,7 @@ footer p {
   border-radius: 8px;
   cursor: pointer;
 }
+
 .primary-button:hover {
   background-color: #333;
 }
@@ -112,6 +113,7 @@ footer p {
   border-radius: 8px;
   cursor: pointer;
 }
+
 .secondary-button:hover {
   background-color: #333;
   border: 2px solid #333;
@@ -223,11 +225,9 @@ a:hover {
 
 /* Responsive Design */
 
-@media screen and (max-width: 768px) {
-}
+@media screen and (max-width: 768px) {}
 
-@media screen and (max-width: 480px) {
-}
+@media screen and (max-width: 480px) {}
 
 #login-form-container {
   width: 40%;
@@ -320,8 +320,7 @@ a:hover {
 /* Tab and table styles */
 
 .projects-page {
-  display: flex;
-  flex-direction: column;
+  width: 100%;
   padding: 20px;
 }
 
@@ -350,6 +349,7 @@ a:hover {
 
 .tab-content {
   display: none;
+  height: -webkit-fill-available;
 }
 
 /* #tableTab {
@@ -366,8 +366,8 @@ a:hover {
 
 /* This enables vertical scrolling */
 .table-scroll-container {
-  min-height: 800px;
-  max-height: 1500px;
+  min-height: 500px;
+  max-height: 800px;
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 4px;
@@ -449,8 +449,8 @@ a:hover {
   display: block;
 }
 
-#budgetTable td:nth-child(1),
-#budgetTable th:nth-child(1) {
+#budgetTable td:nth-child(3),
+#budgetTable th:nth-child(3) {
   width: 300px;
   max-width: 300px;
   white-space: nowrap;
@@ -458,8 +458,8 @@ a:hover {
   text-overflow: ellipsis;
 }
 
-#budgetTable td:nth-child(5),
-#budgetTable th:nth-child(5) {
+#budgetTable td:nth-child(6),
+#budgetTable th:nth-child(6) {
   width: 150px;
   max-width: 150px;
   white-space: nowrap;
@@ -467,8 +467,8 @@ a:hover {
   text-overflow: ellipsis;
 }
 
-#budgetTable td:nth-child(6),
-#budgetTable th:nth-child(6) {
+#budgetTable td:nth-child(2),
+#budgetTable th:nth-child(2) {
   width: 300px;
   max-width: 300px;
   white-space: nowrap;
@@ -509,17 +509,18 @@ a:hover {
   align-items: flex-start;
   flex-wrap: wrap;
   margin-bottom: 20px;
-  max-height: 500px;
+  max-height: 1000px;
   overflow-y: auto;
   display: block;
 }
 
 #chartExportContainer canvas {
   max-width: 800px;
+  max-height: 500px;
 }
 
 #legendTable {
-  margin: 20px auto;
+  margin: 20px 0px;
   border-collapse: collapse;
   width: 100%;
   max-width: 800px;
