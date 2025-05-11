@@ -16,11 +16,11 @@ function idleTime(req, res, next) {
   const now = Date.now();
   const last = req.session.lastActivity || now;
 
-  const sixtyMinutes = 60 * 60 * 1000;
+  const duration = req.session.duration;
 
   const timeLapse = now - last;
 
-  if (timeLapse > sixtyMinutes) {
+  if (timeLapse > duration) {
     destroySession(req);
 
     return res.redirect(
