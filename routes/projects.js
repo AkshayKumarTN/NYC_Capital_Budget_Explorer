@@ -113,13 +113,15 @@ router.get('/:id/all-feedbacks', async (req, res) => {
 router.post('/feedback/:id', async (req, res) => {
   const projectId = req.params.id;
   const feedbackText = req.body.feedbackText;
+  const user = req.session.user;
+  const fullName = user ? `${user.firstName} ${user.lastName}` : 'Anonymous';
 
   if (!feedbackText || feedbackText.trim() === '') {
     return res.status(400).send('Feedback cannot be empty.');
   }
 
   try {
-    await ProjectsMethods.saveFeedback(projectId, feedbackText);
+    await ProjectsMethods.saveFeedback(projectId, feedbackText, fullName);
     res.redirect(`/projects/${projectId}`);
   } catch (err) {
     res.status(500).send('Internal Server Error');
