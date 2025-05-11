@@ -1,8 +1,4 @@
-
-import {boroughMap, neighborhoodMap} from './borough_neighborhood_map.js';
-
-
-
+import nodemailer from "nodemailer";
 
 /**
  * Enrich a raw API item with borough_full and neighborhoods.
@@ -49,4 +45,30 @@ export function validateAge(age) {
   if(age < 14) throwError(`You cannot register due to underage!!`);
 }
 
-export const getErrorMessage = (message) => ({errorMessage : message});
+export const getErrorMessage = (message) => ({ errorMessage: message });
+
+export async function sendVerificationEmail(to, code) {
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: +process.env.SMTP_PORT,
+    secure: process.env.SMTP_SECURE === "true",
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: `"NYC Capital Budget Explorer" <${process.env.SMTP_USER}>`,
+    to,
+    subject: "Password reset code",
+    html: `
+      <p>Your verification code is:</p>
+      <h2>${code}</h2>
+      <p>This code expires in 15 minutes.</p>
+    `,
+  };
+
+  console.log("Email Configuration done!!!");
+  return transporter.sendMail(mailOptions);
+}

@@ -2,7 +2,7 @@ import { getErrorMessage } from "../utils/helpers.js";
 import { destroySession } from "../utils/sessionManager.js";
 
 function requireLogin(req, res, next) {
-  const publicPaths = ["/", "/login", "/signup", "/forgot-password"];
+  const publicPaths = ["/", "/login", "/signup", "/forgot-password", "/verify-reset-code"];
   if (publicPaths.includes(req.path)) return next();
   if (req.session && req.session.user) return next();
 

@@ -144,6 +144,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const tab = document.getElementById(target);
       tab.style.display = "block";
 
+      const exportSection = document.querySelector(".exportButtons");
+
+      if (target === "tableTab") {
+        exportSection.style.display = "flex";
+      } else {
+        exportSection.style.display = "none";
+      }
+
       if (target === "barTab") {
         createBarChart();
       }
@@ -418,11 +426,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function filterPieChartData(data) {
     const borough = document.getElementById("pieSearchBorough").value.trim();
     const year = document.getElementById("pieSearchFy").value.trim();
-    const district = document.getElementById("pieSearchDistrict").value.trim();
-    const sponsor = document
-      .getElementById("pieSearchSponsor")
-      .value.trim()
-      .toLowerCase();
     const neighborhood = document
       .getElementById("pieSearchNieghborhood")
       .value.trim();
@@ -431,8 +434,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return (
         (!borough || project.borough_full === borough) &&
         (!year || project.fiscal_year === year) &&
-        (!district || project.council_district === parseInt(district)) &&
-        (!sponsor || (project.sponsor || "").toLowerCase().includes(sponsor)) &&
         (!neighborhood || project.neighborhoods.includes(neighborhood))
       );
     });
@@ -445,8 +446,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("pieResetFilters").addEventListener("click", () => {
     document.getElementById("pieSearchBorough").value = "";
     document.getElementById("pieSearchFy").value = "";
-    document.getElementById("pieSearchDistrict").value = "";
-    document.getElementById("pieSearchSponsor").value = "";
     document.getElementById("pieSearchNieghborhood").value = "";
     const selectedAward = document.getElementById("awardRangeSelect").value;
     getDataByAmountRange(selectedAward);

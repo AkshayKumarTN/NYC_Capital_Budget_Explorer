@@ -11,7 +11,7 @@ router
   .get("/", authRedirect, (req, res) => {
     res.render("register");
   })
-  .post("/", async (req, res) => {
+  .post("/", authRedirect, async (req, res) => {
     let registrationData = req.body;
     console.log("Registration data: ", registrationData);
 
