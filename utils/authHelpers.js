@@ -12,19 +12,32 @@ export const badRequest = (res, message, redirectPage) => {
   return res.status(400).render(redirectPage, getErrorMessage(message));
 };
 
-export const getValidatedUserCredentials = (email, password) => {
+export const getValidatedUserCredentials = (
+  email,
+  password,
+  skipPasswordIfEmpty = false
+) => {
   email = validateAndReturnString(email, "Email");
-  password = validateAndReturnString(password, "Password");
 
+  password = password.trim();
+  if (!skipPasswordIfEmpty || password.length)
+    password = validateAndReturnString(password, "Password");
+
+  
   //check if the email is valid
-  if (!isValidEmail(email))
-    throwError("Please enter a valid email address.");
+  if (!isValidEmail(email)) throwError("Please enter a valid email address.");
 
-  if(password.length < 8) throwError("Password must be atleast 8 characters");
-  if(!/[a-z]/.test(password)) throwError("Password must have atleast 1 lowercase letter");
-  if(!/[A-Z]/.test(password)) throwError("Password must have atleast 1 uppercase letter");
-  if(!/\d/.test(password)) throwError("Password must have atleast 1 number");
-  if(!/[!@#$%^&*(),.?":{}|<>_\-\\[\]\/]/.test(password)) throwError("Password must have atleast 1 special character");
+  if (!skipPasswordIfEmpty || password.length) {
+    if (password.length < 8)
+      throwError("Password must be atleast 8 characters");
+    if (!/[a-z]/.test(password))
+      throwError("Password must have atleast 1 lowercase letter");
+    if (!/[A-Z]/.test(password))
+      throwError("Password must have atleast 1 uppercase letter");
+    if (!/\d/.test(password)) throwError("Password must have atleast 1 number");
+    if (!/[!@#$%^&*(),.?":{}|<>_\-\\[\]\/]/.test(password))
+      throwError("Password must have atleast 1 special character");
+  }
 
   return {
     email,
@@ -32,7 +45,7 @@ export const getValidatedUserCredentials = (email, password) => {
   };
 };
 
-export function getValidatedUserInfo(userData) {
+export function getValidatedUserInfo(userData, skipPasswordIfEmpty = false) {
   let {
     firstName,
     lastName,
@@ -40,36 +53,51 @@ export function getValidatedUserInfo(userData) {
     password,
     confirmPassword,
     state = "New York",
-    city,
+    borough,
     gender,
     age,
   } = userData;
 
   firstName = validateAndReturnString(firstName, "firstName");
   lastName = validateAndReturnString(lastName, "lastName");
-  
-  ({email, password} = getValidatedUserCredentials(
+
+  ({ email, password } = getValidatedUserCredentials(
     email,
-    password
+    password,
+    skipPasswordIfEmpty
   ));
-  
-  confirmPassword = validateAndReturnString(confirmPassword, "confirmPassword");
-  city = validateAndReturnString(city, "city");
+
+  if(!skipPasswordIfEmpty || password.length)
+    confirmPassword = validateAndReturnString(confirmPassword, "confirmPassword");
+  borough = validateAndReturnString(borough, "Borough");
   state = validateAndReturnString(state, "state");
   gender = validateAndReturnString(gender, "gender");
   age = parseInt(age);
   validateAge(age);
 
   state = state.toLowerCase();
-  if(state !== "new york" && state !== "ny") throwError("Sorry this application is built only for the state of New York");
-  
+  if (state !== "new york" && state !== "ny")
+    throwError(
+      "Sorry this application is built only for the state of New York"
+    );
+  state = state.toUpperCase();
+
   gender = gender.toLowerCase();
-  if(!["male", "female", "other"].includes(gender) && !["m", "f", "o"].includes(gender)) throwError("Provide a valid gender");
-  
-  
+  if (
+    !["male", "female", "other"].includes(gender) &&
+    !["m", "f", "o"].includes(gender)
+  )
+    throwError("Provide a valid gender");
+
+  if (
+    !["Manhattan", "Bronx", "Brooklyn", "Staten Island", "Queens"].includes(
+      borough
+    )
+  )
+    throwError("Provide valid Borough as input");
 
   //check if the password and confirmPassword are same
-  if (password !== confirmPassword)
+  if ((!skipPasswordIfEmpty || password.length) && password !== confirmPassword)
     throwError("Password and confirm password do not match.");
 
   return {
@@ -78,7 +106,7 @@ export function getValidatedUserInfo(userData) {
     email,
     password,
     confirmPassword,
-    city,
+    borough,
     state,
     gender,
     age,

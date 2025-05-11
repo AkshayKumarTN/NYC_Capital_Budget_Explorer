@@ -39,11 +39,7 @@ router
       const userData = await createUser(registrationData);
       console.log("User data: ", userData);
 
-      //Set the session
-      initSession(req, userData);
-      console.log("Session data: ", req.session);
-
-      return res.redirect("/projects");
+      return res.redirect("/login");
     } catch (e) {
       console.log("Error: ", e);
       return res.status(500).render("register", getErrorMessage(e.message));
