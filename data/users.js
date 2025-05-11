@@ -166,6 +166,10 @@ export async function verifyResetAndUpdatePassword(email, code, newPassword) {
   const user = await getUserByEmail(email);
   if (!user) throwError("User does not exist!!");
 
+  const passwordMatch = await bcrypt.compare(newPassword, user.hashPassword);
+
+  if (passwordMatch) throwError("Cannot reuse the old password for new password!!");
+
   if (!user.resetCodeHash || !user.resetCodeExpiry)
     throwError("No reset initiated for this user!!");
 

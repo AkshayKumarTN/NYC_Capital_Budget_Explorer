@@ -14,9 +14,22 @@ import {
   validEmailAndSendVerification,
   verifyResetAndUpdatePassword,
 } from "../data/users.js";
+import { destroySession } from "../utils/sessionManager.js";
 
 function logVerificationError(error) {
   console.error("Login Error: ", error.message);
+}
+
+function getErrorResponse(res, statusCode, message, forSendingEmail = true) {
+  let errorJSON = { isVerificationSent: false };
+  if (!forSendingEmail) {
+    errorJSON = { isPasswordUpdated: false };
+  }
+
+  return res.status(statusCode).json({
+    ...errorJSON,
+    errorMessage: message,
+  });
 }
 
 const forgotPassRouter = Router();
@@ -29,11 +42,7 @@ forgotPassRouter
     const reqData = req.body;
 
     if (!reqData || Object.keys(reqData).length === 0)
-      return badRequest(
-        res,
-        "The email field cannot be empty.",
-        "forgotPassword"
-      );
+      return getErrorResponse(res, 400, "Email Field Cannot be empty!");
 
     //User Already logged In
     if (req.session && req.session.user) {
@@ -48,8 +57,8 @@ forgotPassRouter
       if (!isValidEmail(email)) throwError("Enter valid email ID!!");
     } catch (error) {
       logVerificationError(error);
-      
-      return badRequest(res, error.message, "forgotPassword");
+
+      return getErrorResponse(res, 400, error.message);
     }
 
     //Handling email verification and sending verification code
@@ -59,17 +68,16 @@ forgotPassRouter
 
       if (!emailStatus.isVerificationSent) throwError("Verification Not Sent");
 
-      return res
-        .status(200)
-        .json({ isVerificationSent: emailStatus.isVerificationSent, email });
+      //Storing user email for verification
+      req.session.verificationEmail = email;
+
+      return res.status(200).json({ isVerificationSent: true, email });
     } catch (error) {
       logVerificationError(error);
 
       let statusCode = error.message === "User does not exist!!" ? 400 : 500;
 
-      return res
-        .status(statusCode)
-        .render("forgotPassword", getErrorMessage(error.message));
+      return getErrorResponse(res, statusCode, error.message);
     }
   });
 
@@ -79,10 +87,11 @@ verifyResetRouter.post("/", authRedirect, async (req, res) => {
   const reqData = req.body;
 
   if (!reqData || Object.keys(reqData).length === 0)
-    return badRequest(
+    return getErrorResponse(
       res,
-      "The email, code and password fields cannot be empty.",
-      "forgotPassword"
+      400,
+      "The code and password fields cannot be empty.",
+      false
     );
 
   //User Already logged In
@@ -92,12 +101,21 @@ verifyResetRouter.post("/", authRedirect, async (req, res) => {
     return res.redirect("/projects");
   }
 
+  if (!req.session || !req.session.verificationEmail) {
+    return getErrorResponse(
+      res,
+      400,
+      "Verification Email not sent, try sending verification again!",
+      false
+    );
+  }
+
   //Data Validation
   let email, newPassword, code;
 
   try {
     ({ email, password: newPassword } = getValidatedUserCredentials(
-      reqData.email,
+      req.session.verificationEmail,
       reqData.newPassword
     ));
 
@@ -105,7 +123,7 @@ verifyResetRouter.post("/", authRedirect, async (req, res) => {
   } catch (error) {
     logVerificationError(error);
 
-    return badRequest(res, error.message, "forgotPassword");
+    return getErrorResponse(res, 400, error.message, false);
   }
 
   //Handling Code Verification and User Password Update
@@ -119,7 +137,9 @@ verifyResetRouter.post("/", authRedirect, async (req, res) => {
     if (!verificationStatus.isPasswordUpdated)
       throwError("Some Error Occurred!!!");
 
-    return res.redirect("/login");
+    destroySession(req);
+
+    return res.status(200).json({ isPasswordUpdated: true, email });
   } catch (error) {
     logVerificationError(error);
 
@@ -128,13 +148,12 @@ verifyResetRouter.post("/", authRedirect, async (req, res) => {
       "No reset initiated for this user!!",
       "Verification code expired!!",
       "Invalid verification code provided!!",
+      "Cannot reuse the old password for new password!!",
     ].includes(error.message)
       ? 400
       : 500;
 
-    return res
-      .status(statusCode)
-      .render("forgotPassword", getErrorMessage(error.message));
+    return getErrorResponse(res, statusCode, error.message, false);
   }
 });
 
