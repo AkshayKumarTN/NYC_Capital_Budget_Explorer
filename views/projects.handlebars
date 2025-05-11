@@ -19,14 +19,20 @@ This handlebar file will be rendered when the following route is hit: GET http:/
       {{>navbar}}
       {{! <section class="home-page-background">PROJECT PAGE</section> }}
       <div class="projects-page">
-      <div class="tab-container">
-        <button
-          class="tab-link active"
-          data-tab="tableTab"
-        >Table</button>
-        <button class="tab-link" data-tab="pieTab">Pie Chart</button>
-        <button class="tab-link" data-tab="barTab" >Bar Chart</button>
-      </div>
+        <div class = "tabs-exports">
+          <div class="tab-container">
+            <button
+              class="tab-link active"
+              data-tab="tableTab"
+            >Table</button>
+            <button class="tab-link" data-tab="pieTab">Pie Chart</button>
+            <button class="tab-link" data-tab="barTab" >Bar Chart</button>
+          </div>
+          <div class="exportButtons">
+            <button type="button" id="exportExcel" class="primary-button">Export Excel</button>
+            <button type="button" id="exportPdf" class="secondary-button">Export Pdf</button>
+          </div>
+        </div>
          <div id= "tableTab" class="tab-content" style="display: block;">
             <form id="filterForm" class="table-filters">
               <select id="searchBorough" name="borough" class="input-select">
@@ -74,8 +80,8 @@ This handlebar file will be rendered when the following route is hit: GET http:/
                     <th>Borough</th>
                     <th>Amount ($)</th>
                     <th>Sponsor</th>
-                    <th>Reported Year</th>
-                    <th>Fiscal Year</th>
+                    <th>Title</th>
+                    <th>Year</th>
                     <th>Counsil District</th>
                     <th>Neighborhoods</th>
                   </tr>
@@ -88,7 +94,7 @@ This handlebar file will be rendered when the following route is hit: GET http:/
                       <td>{{this.borough_full}}</td>
                       <td>{{this.award_formatted}}</td>
                       <td>{{this.sponsor}}</td>
-                      <td>{{this.reported}}</td>
+                      <td>{{this.title}}</td>
                       <td>{{this.fiscal_year}}</td>
                       <td>{{this.council_district}}</td>
                       <td>
@@ -138,20 +144,12 @@ This handlebar file will be rendered when the following route is hit: GET http:/
                 {{/each}}
               </select>
 
-              <select id="pieSearchDistrict" class="input-select">
-                <option value="">All Counsil District</option>
-                {{#each councilDistrict}}
-                <option value="{{this}}">{{this}}</option>
-                {{/each}}
-              </select>
-
               <select id="pieSearchNieghborhood" name="neighborhood" class="input-select">
                 <option value="">All Neighborhood</option>
                 {{#each neighborhoodValues}}
                 <option value="{{this}}" {{#if (eq ../selected.neighborhood this)}}selected{{/if}}>{{this}}</option>
                 {{/each}}
               </select>
-              <input id="pieSearchSponsor" type="text" placeholder="Search Sponsor..." class="input-text"/>
               <button id="pieSearchFilters" class="primary-button">Search</button>
               <button id="pieResetFilters" class="secondary-button">Reset</button>
             </div>
