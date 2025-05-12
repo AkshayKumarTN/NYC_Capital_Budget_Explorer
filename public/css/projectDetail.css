@@ -309,7 +309,7 @@ button[type="submit"]:hover {
     opacity: 1;
     transform: translateY(0);
   }
-=======
+}
 .site-footer {
   position: fixed;
   bottom: 0;
