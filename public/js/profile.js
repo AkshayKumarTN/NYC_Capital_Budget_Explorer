@@ -69,10 +69,10 @@ document.getElementById("profileForm").addEventListener("submit", function (e) {
     }
 
     if (!cnf) {
-      cnfPassError.textContent = "Confirm password";
+      cnfPassError.textContent = "Confirm Password is required";
       isValid = false;
     } else if (pass !== cnf) {
-      cnfPassError.textContent = "Passwords differ";
+      cnfPassError.textContent = "Passwords do not match";
       isValid = false;
     }
   }

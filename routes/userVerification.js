@@ -1,12 +1,10 @@
 import { Router } from "express";
 import {
-  getErrorMessage,
   throwError,
   validateAndReturnString,
 } from "../utils/helpers.js";
 import { authRedirect } from "../middlewares/auth.js";
 import {
-  badRequest,
   getValidatedUserCredentials,
   isValidEmail,
 } from "../utils/authHelpers.js";
@@ -46,7 +44,6 @@ forgotPassRouter
 
     //User Already logged In
     if (req.session && req.session.user) {
-      console.log("User Already Logged In!!");
       return res.redirect("/projects");
     }
 
@@ -96,8 +93,6 @@ verifyResetRouter.post("/", authRedirect, async (req, res) => {
 
   //User Already logged In
   if (req.session && req.session.user) {
-    console.log("User Already Logged In!!");
-
     return res.redirect("/projects");
   }
 

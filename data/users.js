@@ -150,8 +150,6 @@ async function validEmailAndSendVerification(email) {
 
   const result = await sendVerificationEmail(email, code);
 
-  console.log("Emailing result : ", result);
-
   return {
     isVerificationSent: true,
     _id: user._id.toString(),
