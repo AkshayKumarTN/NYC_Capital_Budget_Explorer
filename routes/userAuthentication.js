@@ -20,7 +20,6 @@ router
   })
   .post("/", authRedirect, async (req, res) => {
     let loginData = req.body;
-    console.log("Login data: ", loginData);
 
     //make sure there is something present in the req.body
     if (!loginData || Object.keys(loginData).length === 0)
@@ -32,7 +31,6 @@ router
 
     //User Already logged In
     if (req.session && req.session.user) {
-      console.log("User Already Logged In!!");
       return res.redirect("/projects");
     }
 
@@ -55,7 +53,6 @@ router
 
       //Set the session
       initSession(req, userData, loginData.remember);
-      console.log("Session data: ", req.session);
 
       return res.redirect("/projects");
     } catch (e) {
