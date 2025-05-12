@@ -69,6 +69,5 @@ export async function sendVerificationEmail(to, code) {
     `,
   };
 
-  console.log("Email Configuration done!!!");
   return transporter.sendMail(mailOptions);
 }

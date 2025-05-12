@@ -12,7 +12,6 @@ router
   })
   .post(async (req, res) => {
     let registrationData = req.body;
-    console.log("Profile data: ", registrationData);
 
     //make sure there is something present in the req.body
     if (!registrationData || Object.keys(registrationData).length === 0) {
@@ -30,7 +29,6 @@ router
       //User Creation
       try {
         const userData = await updateUserDetails(registrationData, req.session.user.email);
-        console.log("User data: ", userData);
 
         //Re-init Session data after user profile update.
         initSession(req, userData);

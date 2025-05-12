@@ -13,7 +13,6 @@ router
   })
   .post("/", authRedirect, async (req, res) => {
     let registrationData = req.body;
-    console.log("Registration data: ", registrationData);
 
     //make sure there is something present in the req.body
     if (!registrationData || Object.keys(registrationData).length === 0) {
@@ -22,7 +21,6 @@ router
 
     //User already logged in
     if (req.session && req.session.user) {
-      console.log("User Already logged In!!");
       return res.redirect("/projects");
     }
 
@@ -37,7 +35,6 @@ router
     //User Creation
     try {
       const userData = await createUser(registrationData);
-      console.log("User data: ", userData);
 
       return res.redirect("/login");
     } catch (e) {

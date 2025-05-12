@@ -36,8 +36,6 @@ function idleTime(req, res, next) {
 function authRedirect(req, res, next) {
   if (!req.session.user) return next();
   
-  console.log("User Already Logged In!!");
-  
   return res.redirect(`/projects`);
 }
 
