@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as ProjectsMethods from "../data/projects.js";
+import xss from 'xss';
 
 const router = Router();
 
@@ -111,8 +112,8 @@ router.get('/:id/all-feedbacks', async (req, res) => {
 });
 
 router.post('/feedback/:id', async (req, res) => {
-  const projectId = req.params.id;
-  const feedbackText = req.body.feedbackText;
+  const projectId = xss(req.params.id);
+  const feedbackText = xss(req.body.feedbackText);
   const user = req.session.user;
   const fullName = user ? `${user.firstName} ${user.lastName}` : 'Anonymous';
 

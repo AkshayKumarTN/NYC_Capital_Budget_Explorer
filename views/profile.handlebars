@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>User Profile</title>
@@ -8,22 +9,23 @@
 
   <link rel="stylesheet" href="/public/css/profile.css" />
 </head>
+
 <body>
   <header>
-      <a href="/" class="nav-link"><h1>NYC Capital Budget Explorer</h1></a>
-      
-      {{#if errorMessage}}
-        <section id="error-message">
-            <p>{{errorMessage}}</p>
-        </section>
-      {{/if}}
+    <a href="/" class="nav-link">
+      <h1>NYC Capital Budget Explorer</h1>
+    </a>
 
-      <nav>
-        <a href="/projects" class="nav-link">Projects</a>
-        <form action="/logout" method="POST">
-            <button type="submit">Sign Out</button>
-        </form>
-      </nav>
+    {{#if errorMessage}}
+    <section id="error-message">
+      <p>{{errorMessage}}</p>
+    </section>
+    {{/if}}
+
+    <nav>
+      <a href="/projects" class="nav-link">Projects</a>
+      <a id="signoutLink" class="navlink" href="/logout">Sign Out</a>
+    </nav>
   </header>
 
   <main>
@@ -68,11 +70,12 @@
             <label>Borough
               <select id="borough" name="borough" data-initial="{{borough}}">
                 <option value="Unknown">Select Borough</option>
-                <option value="Manhattan" {{#if (eq borough "Manhattan")}}selected{{/if}}>Manhattan</option>
-                <option value="Bronx" {{#if (eq borough "Bronx")}}selected{{/if}}>Bronx</option>
-                <option value="Brooklyn" {{#if (eq borough "Brooklyn")}}selected{{/if}}>Brooklyn</option>
-                <option value="Queens" {{#if (eq borough "Queens")}}selected{{/if}}>Queens</option>
-                <option value="Staten Island" {{#if (eq borough "Staten Island")}}selected{{/if}}>Staten Island</option>
+                <option value="Manhattan" {{#if (eq borough "Manhattan" )}}selected{{/if}}>Manhattan</option>
+                <option value="Bronx" {{#if (eq borough "Bronx" )}}selected{{/if}}>Bronx</option>
+                <option value="Brooklyn" {{#if (eq borough "Brooklyn" )}}selected{{/if}}>Brooklyn</option>
+                <option value="Queens" {{#if (eq borough "Queens" )}}selected{{/if}}>Queens</option>
+                <option value="Staten Island" {{#if (eq borough "Staten Island" )}}selected{{/if}}>Staten Island
+                </option>
               </select>
             </label>
             <span id="borough-error" class="error"></span>
@@ -89,9 +92,9 @@
             <label>Gender
               <select id="gender" name="gender" data-initial="{{gender}}">
                 <option value="Unknown">Select Gender</option>
-                <option value="m" {{#if (eq gender "m")}}selected{{/if}}>Male</option>
-                <option value="f" {{#if (eq gender "f")}}selected{{/if}}>Female</option>
-                <option value="o" {{#if (eq gender "o")}}selected{{/if}}>Other</option>
+                <option value="m" {{#if (eq gender "m" )}}selected{{/if}}>Male</option>
+                <option value="f" {{#if (eq gender "f" )}}selected{{/if}}>Female</option>
+                <option value="o" {{#if (eq gender "o" )}}selected{{/if}}>Other</option>
               </select>
             </label>
             <span id="gender-error" class="error"></span>
@@ -122,4 +125,5 @@
 
   <script src="/public/js/profile.js"></script>
 </body>
+
 </html>

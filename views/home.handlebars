@@ -15,9 +15,7 @@ This handlebar file will be rendered when the following route is hit: GET http:/
     <a href="/"><h1>NYC Capital Budget Explorer</h1></a>
     <section>
         {{#if user}}
-            <form action="/logout" method="POST">
-                <button type="submit">Sign Out</button>
-            </form>
+            <a id="signoutLink" class="navlink" href="/logout">Sign Out</a>
         {{else}}
             <a href="/login">Login</a>
             <a href="/signup">SignUp</a>

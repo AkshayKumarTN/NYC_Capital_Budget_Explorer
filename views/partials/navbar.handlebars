@@ -1,16 +1,14 @@
 <header>
-  <a href="/" class="nav-link"><h1>NYC Capital Budget Explorer</h1></a>
-  <nav class="nav">
-    <ul class="nav-list">
-      <li>
-        <a class="nav-link" href="/export/csv">Export Excel</a>
-      </li>
-      <li><a href="/profile" class="nav-link">Profile</a></li>
-      <li>
-        <form action="/logout" method="POST">
-            <button class="signout" type="submit">Sign Out</button>
-        </form>
-      </li>
-    </ul>
-  </nav>
+  <div class="nav">
+    <a href="/" class="title-nyc">NYC Capital Budget Explorer</a>
+    <div class="nav-divst">
+      <div class="dropdown">
+        <span class="material-icons user-avatar" id="avatar" title="User Menu">person</span>
+        <div class="dropdown-content" id="dropdown">
+          <a href="/profile" class="navlink">Profile</a>
+          <a id="signoutLink" class="navlink" href="/logout">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>

@@ -25,55 +25,103 @@ header {
 }
 
 /* Navigation Bar */
-
 .nav {
-  background-color: #fff;
-  position: absolute;
+  background-color: #ffffff;
   font-family: "Arial", sans-serif;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding: 25px;
-  border-bottom: 5px;
-  border-color: black;
+  justify-content: space-between;
+  padding: 12px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-nav ul {
-  list-style-type: none;
-  display: flex;
-  gap: 30px;
-  justify-content: flex-end;
-  margin: 0;
-  padding: 0;
+.title-nyc {
+  color: #0F66A6;
+  font-size: 1.75rem;
+  text-decoration: none;
+  font-weight: bold;
 }
+
+.title-nyc :hover {
+  color: #0F66A6 !important;
+}
+
+
+.nav-divst {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.material-icons.user-avatar {
+  font-size: 32px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  background-color: #f2f2f2;
+}
+
+.material-icons.user-avatar:hover {
+  background-color: #e0e0e0;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  min-width: 150px;
+  border-radius: 6px;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.dropdown-content a:hover {
+  background-color: #f8f8f8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 .signout {
-    all: unset;
-    font-weight: bold;
-    color: #0F66A6;
-}
-
-nav ul li a {
+  all: unset;
+  font-weight: bold;
   color: #0F66A6;
-  font-weight: Bold;
-  text-decoration: none;
-  padding: 10px 15px;
-  width: 100px;
-  height: 33px;
-  align-items: center;
-  justify-content: center;
 }
 
-nav ul li a:hover, .signout:hover {
-  color: white;
-  background-color: #333;
-  border-radius: 5px;
-  cursor: pointer;
-  transform: scale(1.2);
-}
 
 /* Footer */
 footer {
@@ -222,13 +270,15 @@ p {
 
 /* Anchor */
 
-a {
-  color: #2b69f7;
-  font-weight: Semi-Bold;
-}
+.projects-page {
+  a {
+    color: #2b69f7;
+    font-weight: Semi-Bold;
+  }
 
-a:hover {
-  color: #1e4fe3;
+  a:hover {
+    color: #1e4fe3;
+  }
 }
 
 /* Responsive Design */
