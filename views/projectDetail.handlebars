@@ -28,6 +28,7 @@
         <p><strong>Council District:</strong> {{project.council_district}}</p>
       </div>
 
+      {{#unless userHasGivenFeedback}}
       <div class="feedback-form">
         <h2>Leave Feedback</h2>
         <p id="error" class="errorMessage" hidden></p>
@@ -36,11 +37,14 @@
           <button type="submit">Submit Feedback</button>
         </form>
       </div>
+      {{else}}
+      <p>You have already submitted feedback for this project.</p>
+      {{/unless}}
 
       <div class="feedback-list">
         <h3>Latest Feedback</h3>
         {{#if feedbacks.length}}
-        <ul>
+        <ul id="feedback-list">
           {{#each feedbacks}}
           <li><strong>{{{this.user}}}:</strong> {{{this.text}}} <small>({{this.created_at}})</small></li>
           {{/each}}
