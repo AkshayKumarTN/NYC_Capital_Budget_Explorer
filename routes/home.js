@@ -7,7 +7,7 @@ router.route("/").get(async (req, res) => {
   res.render("home", { user: req.session.user });
 });
 
-router.route("/logout").post(async (req, res) => {
+router.route("/logout").get(async (req, res) => {
   destroySession(req);
   return res.redirect("/");
 });
