@@ -3,10 +3,10 @@ This handlebar file will be rendered when the following route is hit: GET http:/
  -->
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NYC Council Project Explorer App</title>
-  <link rel="stylesheet" href="/public/css/projects.css" />
+  <link rel="stylesheet" href="/public/css/projects.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
@@ -24,7 +24,8 @@ This handlebar file will be rendered when the following route is hit: GET http:/
         </div>
         <div class="exportButtons">
           <button type="button" id="exportExcel" class="primary-button">Export Excel</button>
-          <button type="button" id="exportPdf" class="secondary-button">Export Pdf</button>
+          <button type="button" id="exportPdf" class="secondary-button" hidden>Export Pdf</button>
+          <p><strong>Note: </strong>Click on the Project Title link to provide the feedback</p>
         </div>
       </div>
       <div>
@@ -33,33 +34,41 @@ This handlebar file will be rendered when the following route is hit: GET http:/
             <select id="searchBorough" name="borough" class="input-select">
               <option value="">All Boroughs</option>
               {{#each boroughValues}}
+              {{#if this}}
               <option value="{{this}}" {{#if (eq ../selected.borough this)}}selected{{/if}}>{{this}}</option>
+              {{/if}}
               {{/each}}
             </select>
 
             <select id="searchFy" name="fy" class="input-select">
               <option value="">All Fiscal Years</option>
               {{#each fiscalYears}}
-              <option value="{{this}}" {{#if (eq ../selected.fy this)}}selected{{/if}}>{{this}}</option>
+              {{#if this}}
+                <option value="{{this}}"  {{#if (eq ../selected.fy this)}}selected{{/if}}>{{this}}</option>
+                {{/if}}
               {{/each}}
             </select>
 
             <select id="searchDistrict" name="district" class="input-select">
               <option value="">All Council District</option>
               {{#each councilDistrict}}
+              {{#if this}}
               <option value="{{this}}" {{#if (eq ../selected.district this)}}selected{{/if}}>{{this}}</option>
+              {{/if}}
               {{/each}}
             </select>
 
             <select id="searchNieghborhood" name="neighborhood" class="input-select">
               <option value="">All Neighborhood</option>
               {{#each neighborhoodValues}}
+              {{#if this}}
               <option value="{{this}}" {{#if (eq ../selected.neighborhood this)}}selected{{/if}}>{{this}}</option>
+              {{/if}}
               {{/each}}
             </select>
 
             <input id="searchSponsor" name="sponsor" type="text" value="{{selected.sponsor}}"
-              placeholder="Search Sponsor..." class="input-text" />
+              placeholder="Search Sponsor..." class="input-text">
 
             <button type="button" id="searchFilters" class="primary-button">Search</button>
             <button type="button" id="resetFilters" class="secondary-button">Clear All Filters</button>
@@ -129,21 +138,27 @@ This handlebar file will be rendered when the following route is hit: GET http:/
             <select id="pieSearchBorough" class="input-select">
               <option value="">All Boroughs</option>
               {{#each boroughValues}}
+              {{#if this}}
               <option value="{{this}}">{{this}}</option>
+              {{/if}}
               {{/each}}
             </select>
 
             <select id="pieSearchFy" class="input-select">
               <option value="">All Fiscal Years</option>
               {{#each fiscalYears}}
+              {{#if this}}
               <option value="{{this}}">{{this}}</option>
+              {{/if}}
               {{/each}}
             </select>
 
             <select id="pieSearchNieghborhood" name="neighborhood" class="input-select">
               <option value="">All Neighborhood</option>
               {{#each neighborhoodValues}}
+              {{#if this}}
               <option value="{{this}}" {{#if (eq ../selected.neighborhood this)}}selected{{/if}}>{{this}}</option>
+              {{/if}}
               {{/each}}
             </select>
             <button id="pieSearchFilters" class="primary-button">Search</button>
@@ -182,11 +197,11 @@ This handlebar file will be rendered when the following route is hit: GET http:/
           <div class="filter-controls">
             <label for="yearRangeStart">From:</label>
             <input type="range" id="yearRangeStart" min="{{yearRange.minYear}}" max="{{yearRange.maxYear}}"
-              value="{{yearRange.minYear}}" />
+              value="{{yearRange.minYear}}" >
 
             <label for="yearRangeEnd">To:</label>
             <input type="range" id="yearRangeEnd" min="{{yearRange.minYear}}" max="{{yearRange.maxYear}}"
-              value="{{yearRange.maxYear}}" />
+              value="{{yearRange.maxYear}}" >
 
             <div id="yearRangeDisplay">FY{{yearRange.minYear}} - FY{{yearRange.maxYear}}</div>
             <span id="yearError" style="color: red; display: none;">ERROR: From year cannot be greater than To
@@ -194,14 +209,18 @@ This handlebar file will be rendered when the following route is hit: GET http:/
             <select id="filterBorough">
               <option value="">All Boroughs</option>
               {{#each boroughValues}}
+              {{#if this}}
               <option value="{{this}}">{{this}}</option>
+              {{/if}}
               {{/each}}
             </select>
 
             <select id="filterDistrict">
               <option value="">All Districts</option>
               {{#each councilDistrict}}
+              {{#if this}}
               <option value="{{this}}">{{this}}</option>
+              {{/if}}
               {{/each}}
             </select>
 
@@ -233,7 +252,7 @@ This handlebar file will be rendered when the following route is hit: GET http:/
 
 
     </div>
-    </div>
+    {{!-- </div> --}}
 
     {{>footer}}
   </main>
