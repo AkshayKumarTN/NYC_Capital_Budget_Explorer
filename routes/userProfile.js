@@ -21,9 +21,9 @@ router
     //Data Validation
     try {
         registrationData = getValidatedUserInfo(registrationData, true);
-      } catch (e) {
-        console.log("Error: ", e.message);
-        return badRequest(res, e.message, "profile");
+      } catch (error) {
+        console.log("Error: ", error.message);
+        return badRequest(res, error.message, "profile");
       }
   
       //User Creation
@@ -34,9 +34,9 @@ router
         initSession(req, userData);
   
         return res.render("profile", { ...req.session.user});
-      } catch (e) {
-        console.log("Error: ", e);
-        return res.status(500).render("profile", getErrorMessage(e.message));
+      } catch (error) {
+        console.log("Error: ", error.message);
+        return res.status(500).render("profile", getErrorMessage(error.message));
       }
   });
 

@@ -55,8 +55,8 @@ router
       initSession(req, userData, loginData.remember);
 
       return res.redirect("/projects");
-    } catch (e) {
-      logLoginError(e);
+    } catch (error) {
+      logLoginError(error);
       return res
         .status(401)
         .render(
