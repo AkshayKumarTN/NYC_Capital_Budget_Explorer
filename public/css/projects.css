@@ -8,8 +8,9 @@ body {
   margin: 0;
   font-family: "Arial", sans-serif;
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  overflow-y: auto;
+  height: auto;
+  overflow-x: auto;
 }
 
 main {
@@ -365,6 +366,8 @@ a:hover {
   } */
 /* Force horizontal scroll on overflow */
 .table-container {
+  display: flex;
+    flex-direction: column;
   background-color: white;
   padding: 1rem;
   border-radius: 8px;
@@ -377,8 +380,9 @@ a:hover {
   min-height: 500px;
   max-height: 800px;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
   border-radius: 4px;
+  
 }
 
 /* Ensure headers remain sticky inside scrollable area */
@@ -398,6 +402,7 @@ a:hover {
   width: 100%;
   border-collapse: collapse;
   min-width: 1000px;
+  overflow-x: auto;
 }
 
 .table td {
@@ -554,4 +559,17 @@ a:hover {
 .export-mode.exporting {
   max-height: none !important;
   overflow: visible !important;
+}
+
+.site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+  z-index: 100;
 }
