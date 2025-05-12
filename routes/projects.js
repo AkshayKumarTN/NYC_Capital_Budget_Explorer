@@ -88,12 +88,18 @@ router.get("/byAwardRange", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const projectId = req.params.id;
+  const userId = req.session.user?._id;
 
   try {
     const project = await ProjectsMethods.getProjectById(projectId);
     const feedbacks = await ProjectsMethods.getLatestFeedbacks(projectId, 10);
     const totalFeedbacks = await ProjectsMethods.getFeedbackCount(projectId);
-    res.render('projectDetail', { project, feedbacks, totalFeedbacks });
+
+    let userHasGivenFeedback = false;
+    if (userId) {
+      userHasGivenFeedback = await ProjectsMethods.hasUserGivenFeedback(projectId, userId);
+    }
+    res.render('projectDetail', { project, feedbacks, totalFeedbacks, userHasGivenFeedback });
   } catch (err) {
     console.error('Error fetching project or feedback:', err);
     res.status(500).send('Internal Server Error');
@@ -115,14 +121,15 @@ router.post('/feedback/:id', async (req, res) => {
   const projectId = xss(req.params.id);
   const feedbackText = xss(req.body.feedbackText);
   const user = req.session.user;
-  const fullName = user ? `${user.firstName} ${user.lastName}` : 'Anonymous';
-
+  if (!user) return res.status(403).send('Login required');
   if (!feedbackText || feedbackText.trim() === '') {
     return res.status(400).send('Feedback cannot be empty.');
   }
-
+  const fullName = user ? `${user.firstName} ${user.lastName}` : 'Anonymous';
   try {
-    await ProjectsMethods.saveFeedback(projectId, feedbackText, fullName);
+    const alreadyGiven = await ProjectsMethods.hasUserGivenFeedback(projectId, user._id);
+    if (alreadyGiven) return res.status(400).send('You have already submitted feedback.');
+    await ProjectsMethods.saveFeedback(projectId, feedbackText, user._id, fullName);
     res.redirect(`/projects/${projectId}`);
   } catch (err) {
     res.status(500).send('Internal Server Error');

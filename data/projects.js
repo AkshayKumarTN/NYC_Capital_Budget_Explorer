@@ -107,15 +107,17 @@ export const getProjectById = async (id) => {
   return project;
 };
 
-export const saveFeedback = async (projectId, text, userFullName) => {
+export const saveFeedback = async (projectId, text, userId, userFullName) => {
   if (!projectId || typeof projectId !== 'string') throw 'Error: Invalid project ID';
   if (!text || typeof text !== 'string' || text.trim().length === 0) throw 'Error: Feedback text is required';
   if (!userFullName || typeof userFullName !== 'string') throw 'Error: Invalid username';
+  if (!userId) throw 'User info is required';
 
   const feedbacksCollection = await feedbacks(); // assuming you have a `feedbacks()` collection helper
   const feedbackDoc = {
     project_id: projectId.trim(),
     text: text.trim(),
+    user_id: userId,
     user: userFullName.trim(),
     created_at: new Date()
   };
@@ -155,6 +157,18 @@ export const getFeedbackCount = async (projectId) => {
   const count = await feedbacksCollection.countDocuments({ project_id: projectId.trim() });
 
   return count;
+};
+
+export const hasUserGivenFeedback = async (projectId, userId) => {
+  if (!projectId || !userId) throw 'Project ID and User ID are required';
+
+  const feedbacksCollection = await feedbacks();
+  const existing = await feedbacksCollection.findOne({
+    project_id: projectId,
+    user_id: userId
+  });
+
+  return !!existing;
 };
 
 

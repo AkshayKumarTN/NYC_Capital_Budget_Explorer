@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const feedbackForm = document.querySelector(".feedback-form form");
     const feedbackText = document.querySelector("textarea[name='feedbackText']");
-    const feedbackList = document.querySelector(".feedback-list");
+    const feedbackList = document.getElementById("feedback-list");
     const errorMsg = document.getElementById("error");
     const loadMoreBtn = document.getElementById("load-more-btn");
 
