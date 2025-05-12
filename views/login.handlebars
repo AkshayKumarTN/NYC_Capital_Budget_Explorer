@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <link rel="stylesheet" href="/public/css/login.css" />
+  <link rel="stylesheet" href="/public/css/login.css" >
 </head>
 <body>
   <header>
       <a href="/"><h1>NYC Capital Budget Explorer</h1></a>
       
       {{#if errorMessage}}
-        <section id="error-message">
+        <div id="error-message">
             <p>{{errorMessage}}</p>
-        </section>
+        </div>
       {{/if}}
   </header>
 
@@ -25,20 +25,20 @@
     <section class="card">
       <h2>Login</h2>
       <form action="/login" id="loginForm" method="POST">
-        <section class="group">
-          <input type="email" name="email" id="email" placeholder="Email Address" required/>
+        <div class="group">
+          <input type="email" name="email" id="email" placeholder="Email Address" required>
           <span class="error" id="email-error"></span>
-        </section>
-        <section class="group">
-          <input type="password" name="password" id="password" placeholder="Password" required/>
+        </div>
+        <div class="group">
+          <input type="password" name="password" id="password" placeholder="Password" required>
           <span class="error" id="password-error"></span>
-        </section>
-        <section class="options">
+        </div>
+        <div class="options">
           <label class="remember-label">
-            <input type="checkbox" name="remember" value="true" /> Remember me
+            <input type="checkbox" name="remember" value="true" > Remember me
           </label>
           <a class="forgot-pswd" href="/forgot-password">Forgot Password?</a>
-        </section>
+        </div>
         <button type="submit">Login</button>
         <p class="signup"><a href="/signup">Sign Up</a></p>
       </form>

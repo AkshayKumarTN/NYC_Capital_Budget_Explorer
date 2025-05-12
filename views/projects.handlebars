@@ -112,11 +112,11 @@ This handlebar file will be rendered when the following route is hit: GET http:/
             {{#if totalPages}}
             {{#each (range 1 totalPages)}}
             <a href="/projects?page={{this}}
-                                    {{#if ../selected.borough}}&borough={{../selected.borough}}{{/if}}
-                                    {{#if ../selected.fy}}&fy={{../selected.fy}}{{/if}}
-                                    {{#if ../selected.district}}&district={{../selected.district}}{{/if}}
-                                    {{#if ../selected.neighborhood}}&neighborhood={{../selected.neighborhood}}{{/if}}
-                                    {{#if ../selected.sponsor}}&sponsor={{../selected.sponsor}}{{/if}}"
+              {{#if ../selected.borough}}&borough={{../selected.borough}}{{/if}}
+              {{#if ../selected.fy}}&fy={{../selected.fy}}{{/if}}
+              {{#if ../selected.district}}&district={{../selected.district}}{{/if}}
+              {{#if ../selected.neighborhood}}&neighborhood={{../selected.neighborhood}}{{/if}}
+              {{#if ../selected.sponsor}}&sponsor={{../selected.sponsor}}{{/if}}"
               class="page-link {{#if (eq ../currentPage this)}}active{{/if}}">
               {{this}}
             </a>

@@ -18,6 +18,7 @@ export const getValidatedUserCredentials = (
   skipPasswordIfEmpty = false
 ) => {
   email = validateAndReturnString(email, "Email");
+  email = email.toLowerCase();
 
   password = password.trim();
   if (!skipPasswordIfEmpty || password.length)

@@ -309,4 +309,16 @@ button[type="submit"]:hover {
     opacity: 1;
     transform: translateY(0);
   }
+=======
+.site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+  z-index: 100;
 }

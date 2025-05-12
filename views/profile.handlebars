@@ -2,16 +2,18 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Profile</title>
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <link rel="stylesheet" href="/public/css/profile.css" />
+  <link rel="stylesheet" href="/public/css/profile.css" >
 </head>
 
 <body>
   <header>
+
     <a href="/" class="nav-link">
       <h1>NYC Capital Budget Explorer</h1>
     </a>
@@ -40,28 +42,28 @@
         <div class="grid">
           <div class="field">
             <label>First Name
-              <input id="firstName" name="firstName" type="text" value="{{firstName}}" />
+              <input id="firstName" name="firstName" type="text" value="{{firstName}}" >
             </label>
             <span id="firstName-error" class="error"></span>
           </div>
 
           <div class="field">
             <label>Last Name
-              <input id="lastName" name="lastName" type="text" value="{{lastName}}" />
+              <input id="lastName" name="lastName" type="text" value="{{lastName}}" >
             </label>
             <span id="lastName-error" class="error"></span>
           </div>
 
           <div class="field">
             <label>Email
-              <input id="email" name="email" type="email" value="{{email}}" readonly />
+              <input id="email" name="email" type="email" value="{{email}}" readonly >
             </label>
             <span id="email-error" class="error"></span>
           </div>
 
           <div class="field">
             <label>State
-              <input id="state" type="text" value="{{state}}" readonly />
+              <input id="state" type="text" value="{{state}}" readonly >
             </label>
             <span class="error"></span>
           </div>
@@ -83,7 +85,7 @@
 
           <div class="field">
             <label>Age
-              <input id="age" name="age" type="number" min="1" max="100" value="{{age}}" />
+              <input id="age" name="age" type="number" min="1" max="100" value="{{age}}" >
             </label>
             <span id="age-error" class="error"></span>
           </div>
@@ -102,14 +104,14 @@
 
           <div class="field">
             <label>Password
-              <input id="password" name="password" type="password" placeholder="New password" />
+              <input id="password" name="password" type="password" placeholder="New password" >
             </label>
             <span id="password-error" class="error"></span>
           </div>
 
           <div class="field full">
             <label>Confirm Password
-              <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm password" />
+              <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm password" >
             </label>
             <span id="confirmPassword-error" class="error"></span>
           </div>
