@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { badRequest, getValidatedUserInfo } from "../utils/authHelpers.js";
 import { createUser } from "../data/index.js";
-import { initSession } from "../utils/sessionManager.js";
 import { getErrorMessage } from "../utils/helpers.js";
 import { authRedirect } from "../middlewares/auth.js";
 
@@ -27,9 +26,9 @@ router
     //Data Validation
     try {
       registrationData = getValidatedUserInfo(registrationData);
-    } catch (e) {
-      console.log("Error: ", e.message);
-      return badRequest(res, e.message, "register");
+    } catch (error) {
+      console.log("Error: ", error.message);
+      return badRequest(res, error.message, "register");
     }
 
     //User Creation
@@ -37,9 +36,9 @@ router
       const userData = await createUser(registrationData);
 
       return res.redirect("/login");
-    } catch (e) {
-      console.log("Error: ", e);
-      return res.status(500).render("register", getErrorMessage(e.message));
+    } catch (error) {
+      console.log("Error: ", error.message);
+      return res.status(500).render("register", getErrorMessage(error.message));
     }
   });
 
