@@ -20,17 +20,27 @@ document.getElementById("profileForm").addEventListener("submit", function (e) {
 
   const ageError = document.getElementById("age-error");
   const cnfPassError = document.getElementById("confirmPassword-error");
+  const firstNameError = document.getElementById("firstName-error");
+  const lastNameError = document.getElementById("lastName-error");
 
   if (!first) {
-    document.getElementById("firstName-error").textContent =
-      "First name required";
+    firstNameError.textContent = "First name required";
+    isValid = false;
+  }else if(first.length < 3)
+  {
+    firstNameError.textContent = "Min 3 characters required for First name";
     isValid = false;
   }
+
   if (!last) {
-    document.getElementById("lastName-error").textContent =
-      "Last name required";
+    lastNameError.textContent = "Last name required";
+    isValid = false;
+  }else if(last.length < 3)
+  {
+    lastNameError.textContent = "Min 3 characters required for Last name";
     isValid = false;
   }
+
   if (!borough || borough === "Unknown") {
     document.getElementById("borough-error").textContent = "Select a Borough";
     isValid = false;

@@ -35,7 +35,6 @@ function getHashedPassword(password) {
 async function userLogin(email, password) {
   ({ email, password } = getValidatedUserCredentials(email, password));
 
-  console.log("User email: ", email, "User password: ", password);
   //Checking if email and password are matching to correct user credentials
   const userFound = await getUserByEmail(email);
 

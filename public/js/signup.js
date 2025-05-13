@@ -35,10 +35,18 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
     firstNameError.textContent = "First name is required";
     firstName.style.display = "block";
     valid = false;
+  } else if (firstName.length < 3) {
+    firstNameError.textContent = "Min 3 character required for First name";
+    firstNameError.style.display = "block";
+    valid = false;
   }
 
   if (!lastName) {
     lastNameError.textContent = "Last name is required";
+    lastNameError.style.display = "block";
+    valid = false;
+  } else if (lastName.length < 3) {
+    lastNameError.textContent = "Min 3 character required for Last name";
     lastNameError.style.display = "block";
     valid = false;
   }
@@ -93,7 +101,7 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
 
   if (borough === "Unknown") {
     boroughError.textContent = "Select a Borough";
-    boroughError.style.display = "block"
+    boroughError.style.display = "block";
     valid = false;
   }
 
