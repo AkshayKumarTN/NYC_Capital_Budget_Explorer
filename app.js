@@ -25,7 +25,7 @@ app.use(
 app.use("/public", express.static("public"));
 app.engine('handlebars', engine({
   helpers: {
-    eq: (a, b) => a === b,
+    eq: (a, b) => String(a) === String(b),
     range: function (from, to) {
       const rangeArray = [];
       for (let i = from; i <= to; i++) {

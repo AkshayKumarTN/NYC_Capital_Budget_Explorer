@@ -17,11 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ************ EXPORT BUTTONS ************
   document.getElementById("exportExcel").addEventListener("click", () => {
-    window.location.href = 'export/csv'; // This hits your Express route to download CSV
+    window.location.href = 'export/csv'; // This hits the Express route to download CSV
   });
 
   document.getElementById("exportPdf").addEventListener("click", () => {
-    window.location.href = 'export/pdf'; // This hits your Express route to download PDF
+    window.location.href = 'export/pdf'; // This hits the Express route to download PDF
   });
 
   // ************* NEW BAR CHART WITH A BAR CHART ROUTE *************
