@@ -71,9 +71,13 @@ forgotPassRouter
 
       let statusCode = error.message === "User does not exist!!" ? 400 : 500;
 
-      const errorMessage = error.message.includes("ECONNREFUSED")
-        ? "Database is not connected, try again!"
-        : error.message;
+      let errorMessage = error.message;
+      if (error.message.includes("ECONNREFUSED")) {
+        if (error.message.includes("587"))
+          errorMessage =
+            "Configure the default email credentials in .env file, then try again! (Refer Readme.md)";
+        else errorMessage = "Database is not connected, try again!";
+      }
 
       return getErrorResponse(res, statusCode, errorMessage);
     }
@@ -149,9 +153,13 @@ verifyResetRouter.post("/", authRedirect, async (req, res) => {
       ? 400
       : 500;
 
-    const errorMessage = error.message.includes("ECONNREFUSED")
-      ? "Database is not connected, try again!"
-      : error.message;
+    let errorMessage = error.message;
+    if (error.message.includes("ECONNREFUSED")) {
+      if (error.message.includes("587"))
+        errorMessage =
+          "Configure the default email credentials in .env file, then try again! (Refer Readme.md)";
+      else errorMessage = "Database is not connected, try again!";
+    }
 
     return getErrorResponse(res, statusCode, errorMessage, false);
   }
