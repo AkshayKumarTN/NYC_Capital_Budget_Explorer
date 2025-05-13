@@ -7,6 +7,14 @@ A web-based platform that visualizes daily-updated budget data and incorporates 
 1. Have the latest version of node.js and node package manager(npm) installed in your machine.
 2. Have mongodb database installed in your machine will all its default settings.
 
+
+## Team Members
+
+- Badri Narayanan Rajendran  (CWID: 20030350)
+- Emmanuel Okoro  (CWID: 20030965)
+- Vishal Rathod (CWID: 20033033)
+- Akshay Kumar Talur Narasimmulu (CWID: 20032052)
+
 ## Steps for running the project on your local machine
 
 ```Bash
