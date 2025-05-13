@@ -57,14 +57,12 @@ router
       return res.redirect("/projects");
     } catch (error) {
       logLoginError(error);
-      return res
-        .status(401)
-        .render(
-          "login",
-          getErrorMessage(
-            `Either user email or password is incorrect. Please try again.`
-          )
-        );
+
+      const errorMessage = error.message.includes("ECONNREFUSED")
+        ? "Database is not connected, try again!"
+        : "Either user email or password is incorrect. Please try again.";
+      
+        return res.status(401).render("login", getErrorMessage(errorMessage));
     }
   });
 

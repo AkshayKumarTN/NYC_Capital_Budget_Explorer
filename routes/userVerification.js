@@ -1,8 +1,5 @@
 import { Router } from "express";
-import {
-  throwError,
-  validateAndReturnString,
-} from "../utils/helpers.js";
+import { throwError, validateAndReturnString } from "../utils/helpers.js";
 import { authRedirect } from "../middlewares/auth.js";
 import {
   getValidatedUserCredentials,
@@ -74,7 +71,11 @@ forgotPassRouter
 
       let statusCode = error.message === "User does not exist!!" ? 400 : 500;
 
-      return getErrorResponse(res, statusCode, error.message);
+      const errorMessage = error.message.includes("ECONNREFUSED")
+        ? "Database is not connected, try again!"
+        : error.message;
+
+      return getErrorResponse(res, statusCode, errorMessage);
     }
   });
 
@@ -148,7 +149,11 @@ verifyResetRouter.post("/", authRedirect, async (req, res) => {
       ? 400
       : 500;
 
-    return getErrorResponse(res, statusCode, error.message, false);
+    const errorMessage = error.message.includes("ECONNREFUSED")
+      ? "Database is not connected, try again!"
+      : error.message;
+
+    return getErrorResponse(res, statusCode, errorMessage, false);
   }
 });
 

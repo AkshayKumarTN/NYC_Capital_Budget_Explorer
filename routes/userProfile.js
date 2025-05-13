@@ -3,6 +3,11 @@ import { badRequest, getValidatedUserInfo } from "../utils/authHelpers.js";
 import { updateUserDetails } from "../data/users.js";
 import { initSession } from "../utils/sessionManager.js";
 
+function logProfileError(error)
+{
+    console.log("Error: ", error.message);
+}
+
 const router = Router();
 
 router
@@ -22,7 +27,7 @@ router
     try {
         registrationData = getValidatedUserInfo(registrationData, true);
       } catch (error) {
-        console.log("Error: ", error.message);
+        logProfileError(error);
         return badRequest(res, error.message, "profile");
       }
   
@@ -35,7 +40,7 @@ router
   
         return res.render("profile", { ...req.session.user});
       } catch (error) {
-        console.log("Error: ", error.message);
+        logProfileError(error);
         return res.status(500).render("profile", getErrorMessage(error.message));
       }
   });

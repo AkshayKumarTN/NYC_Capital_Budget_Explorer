@@ -4,6 +4,11 @@ import { createUser } from "../data/index.js";
 import { getErrorMessage } from "../utils/helpers.js";
 import { authRedirect } from "../middlewares/auth.js";
 
+function logRegistrationError(error)
+{
+    console.log("Error: ", error.message);
+}
+
 const router = Router();
 
 router
@@ -27,7 +32,7 @@ router
     try {
       registrationData = getValidatedUserInfo(registrationData);
     } catch (error) {
-      console.log("Error: ", error.message);
+      logRegistrationError(error);
       return badRequest(res, error.message, "register");
     }
 
@@ -37,8 +42,13 @@ router
 
       return res.redirect("/login");
     } catch (error) {
-      console.log("Error: ", error.message);
-      return res.status(500).render("register", getErrorMessage(error.message));
+      logRegistrationError(error);
+
+      const errorMessage = error.message.includes("ECONNREFUSED")
+        ? "Database is not connected, try again!"
+        : error.message;
+
+      return res.status(500).render("register", getErrorMessage(errorMessage));
     }
   });
 

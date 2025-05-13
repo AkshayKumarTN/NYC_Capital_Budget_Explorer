@@ -4,8 +4,6 @@ const clientError = document.getElementsByClassName("client-error")[0];
 const errorsArr = document.querySelectorAll(".error-message");
 
 function displayClientError(errorMessage) {
-  console.log("Error Occurred : ", errorMessage);
-
   clientError.style.display = "block";
 
   clientError.innerHTML = `<p>${errorMessage}</p>`;

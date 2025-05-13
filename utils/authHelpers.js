@@ -76,6 +76,10 @@ export function getValidatedUserInfo(userData, skipPasswordIfEmpty = false) {
   age = parseInt(age);
   validateAge(age);
 
+  if(firstName.length < 3) throwError("Min 3 characters required for First name");
+
+  if(lastName.length < 3) throwError("Min 3 characters required for Last name");
+
   state = state.toLowerCase();
   if (state !== "new york" && state !== "ny")
     throwError(
