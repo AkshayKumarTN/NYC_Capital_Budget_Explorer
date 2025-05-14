@@ -1,4 +1,5 @@
 import { projects, feedbacks } from "../config/mongoCollections.js";
+import { ObjectId } from 'mongodb';
 
 export const getAllProjects = async () => {
   const projectsCollection = await projects();
@@ -101,7 +102,7 @@ export const getProjectById = async (id) => {
   id = id.trim();
   // if (!ObjectId.isValid(id)) throw 'Error: invalid object ID';
   const projectsCollection = await projects();
-  const project = await projectsCollection.findOne({ id: id });
+  const project = await projectsCollection.findOne({ _id: new ObjectId(id) });
   if (project === null) throw "Error: No Project with that id";
   project._id = project._id.toString();
   return project;
