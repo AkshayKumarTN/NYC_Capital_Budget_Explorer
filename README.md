@@ -27,6 +27,7 @@ A web-based platform that visualizes daily-updated budget data and incorporates 
 > npm start
 ```
 
+# Extra Feature - Forgot Password.
 
 ## Add the following config to send verification email for forgot-password
 
@@ -38,8 +39,11 @@ SMTP_USER=your_email@gmail.com
 SMTP_PASS="your_google_account_app_password"
 ```
 
-### You can follow this page for creating app password for google account.
-https://support.google.com/accounts/answer/185833?hl=en
+### You can follow this page and following instructions for creating app password for google account.
+1. https://support.google.com/accounts/answer/185833?hl=en
+2. Click on the "Create and manage your app passwords" link to navigate to App password page.
+3. Then you will have to authenticate into your account.
+4. After Authentication you can follow below details.
 
 ### After navigating to the App Password page for your google account follow the below steps:
 1. Add App Name
